@@ -1,0 +1,390 @@
+{
+  "name": "First_Project_n8n",
+  "nodes": [
+    {
+      "parameters": {
+        "formTitle": "WorkFlow Beginner",
+        "formDescription": "Please practice this work flow ",
+        "formFields": {
+          "values": [
+            {
+              "fieldLabel": "Full Name",
+              "placeholder": "please write your full name ",
+              "requiredField": true
+            },
+            {
+              "fieldLabel": "Phone Number",
+              "fieldType": "number",
+              "placeholder": "Please write your phone as 06xxxxxxxx",
+              "requiredField": true
+            },
+            {
+              "fieldLabel": "Email",
+              "fieldType": "email",
+              "placeholder": "Please write you Email",
+              "requiredField": true
+            },
+            {
+              "fieldLabel": "Age",
+              "fieldType": "number",
+              "placeholder": "Please write you Age",
+              "requiredField": true
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.formTrigger",
+      "typeVersion": 2.5,
+      "position": [
+        -320,
+        0
+      ],
+      "id": "8deeb0e3-0205-4541-a1a1-446958f958a0",
+      "name": "On form submission",
+      "webhookId": "bc87537f-6eec-4f85-bccc-bb77fa46250f"
+    },
+    {
+      "parameters": {
+        "rules": {
+          "values": [
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 3
+                },
+                "conditions": [
+                  {
+                    "leftValue": "={{ $json.Age }}",
+                    "rightValue": 18,
+                    "operator": {
+                      "type": "number",
+                      "operation": "gt"
+                    },
+                    "id": "c4266cf8-aa60-4898-946d-40f5a67bfcda"
+                  }
+                ],
+                "combinator": "and"
+              }
+            },
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 3
+                },
+                "conditions": [
+                  {
+                    "id": "2fdba4dd-8c3d-4052-a93a-429150ec1908",
+                    "leftValue": "={{ $json.Age }}",
+                    "rightValue": 18,
+                    "operator": {
+                      "type": "number",
+                      "operation": "lt"
+                    }
+                  }
+                ],
+                "combinator": "and"
+              }
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.switch",
+      "typeVersion": 3.4,
+      "position": [
+        112,
+        0
+      ],
+      "id": "7b99b3ef-27d6-4748-a9f1-79f78578d6bb",
+      "name": "Switch"
+    },
+    {
+      "parameters": {
+        "authentication": "serviceAccount",
+        "operation": "append",
+        "documentId": {
+          "__rl": true,
+          "value": "1cz1HWcU_C5MdnJp9WrqkNN02ivyjQUvlUKrBLyC7Sl4",
+          "mode": "list",
+          "cachedResultName": "Fom_N8N",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1cz1HWcU_C5MdnJp9WrqkNN02ivyjQUvlUKrBLyC7Sl4/edit?usp=drivesdk"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": 1204252649,
+          "mode": "list",
+          "cachedResultName": "Greater than 18",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1cz1HWcU_C5MdnJp9WrqkNN02ivyjQUvlUKrBLyC7Sl4/edit#gid=1204252649"
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "Name": "={{ $('On form submission').item.json['Full Name'] }}",
+            "Phone Number": "={{ $('On form submission').item.json['Phone Number'] }}",
+            "Email": "={{ $('On form submission').item.json.Email }}",
+            "Age": "={{ $('On form submission').item.json.Age }}",
+            "Date Of Submission": "={{ $json.submittedAt }}"
+          },
+          "matchingColumns": [],
+          "schema": [
+            {
+              "id": "Name",
+              "displayName": "Name",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "Phone Number",
+              "displayName": "Phone Number",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "Email",
+              "displayName": "Email",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "Age",
+              "displayName": "Age",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "Date Of Submission",
+              "displayName": "Date Of Submission",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.7,
+      "position": [
+        448,
+        -144
+      ],
+      "id": "82a5049b-1b1e-4d3d-9e0c-cde63d350044",
+      "name": "Greater than 18",
+      "credentials": {
+        "googleApi": {
+          "id": "U8TnYqF6m4fk9vFP",
+          "name": "Google Sheets account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "authentication": "serviceAccount",
+        "operation": "append",
+        "documentId": {
+          "__rl": true,
+          "value": "1cz1HWcU_C5MdnJp9WrqkNN02ivyjQUvlUKrBLyC7Sl4",
+          "mode": "list",
+          "cachedResultName": "Fom_N8N",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1cz1HWcU_C5MdnJp9WrqkNN02ivyjQUvlUKrBLyC7Sl4/edit?usp=drivesdk"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": "gid=0",
+          "mode": "list",
+          "cachedResultName": "less than 18",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1cz1HWcU_C5MdnJp9WrqkNN02ivyjQUvlUKrBLyC7Sl4/edit#gid=0"
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "Name": "={{ $('On form submission').item.json['Full Name'] }}",
+            "Phone Number": "={{ $('On form submission').item.json['Phone Number'] }}",
+            "Email": "={{ $('On form submission').item.json.Email }}",
+            "Age": "={{ $('On form submission').item.json.Age }}",
+            "Date Of Submission": "={{ $json.submittedAt }}"
+          },
+          "matchingColumns": [],
+          "schema": [
+            {
+              "id": "Name",
+              "displayName": "Name",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Phone Number",
+              "displayName": "Phone Number",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Email",
+              "displayName": "Email",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Age",
+              "displayName": "Age",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Date Of Submission",
+              "displayName": "Date Of Submission",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.7,
+      "position": [
+        464,
+        144
+      ],
+      "id": "d9ebf1f1-7381-447c-8da2-c5a29ec6e999",
+      "name": "Less than 18",
+      "credentials": {
+        "googleApi": {
+          "id": "U8TnYqF6m4fk9vFP",
+          "name": "Google Sheets account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "mode": "runOnceForEachItem",
+        "jsCode": "// 1. Get the current item (Name, Phone, submittedAt, etc.)\nconst item = $input.item.json;\n\n// 2. Format the date from 'submittedAt'\nconst date = new Date(item.submittedAt);\nconst formatted = new Intl.DateTimeFormat('en-GB', {\n  year: 'numeric',\n  month: '2-digit',\n  day: '2-digit',\n  hour: 'numeric',\n  minute: '2-digit',\n  hour12: true,\n  timeZone: 'Africa/Casablanca'\n}).format(date).replace(',', '').toLowerCase();\n\n// 3. Put the NEW format back into the OLD name\nitem.submittedAt = formatted;\n\n// 4. Return the whole item with the updated date\nreturn item;"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        -112,
+        0
+      ],
+      "id": "25a09647-9ad0-44b3-b367-b59dcaea2330",
+      "name": "Code in JavaScript"
+    }
+  ],
+  "pinData": {
+    "On form submission": [
+      {
+        "json": {
+          "Full Name": "fdgsdfg",
+          "Phone Number": 612457845,
+          "Email": "aadfasf@gmail.com",
+          "Age": 16,
+          "submittedAt": "2026-03-23T18:22:40.515-04:00",
+          "formMode": "test"
+        },
+        "pairedItem": {
+          "item": 0
+        }
+      }
+    ]
+  },
+  "connections": {
+    "On form submission": {
+      "main": [
+        [
+          {
+            "node": "Code in JavaScript",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Switch": {
+      "main": [
+        [
+          {
+            "node": "Greater than 18",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Less than 18",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Code in JavaScript": {
+      "main": [
+        [
+          {
+            "node": "Switch",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1",
+    "binaryMode": "separate",
+    "availableInMCP": false
+  },
+  "versionId": "19ae96c7-171a-4481-b03e-218c82090ad9",
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": "d18f9a118c484c60eb77c3ff16d5a2ac0623b8773cdf0ce31c7a0431b4f32afb"
+  },
+  "id": "XjbLlyTPofpIhUxr",
+  "tags": []
+}
