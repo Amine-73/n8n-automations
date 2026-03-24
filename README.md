@@ -35,3 +35,7 @@ Data Transformation: Moving data from a raw "Trigger" state to a "Production-rea
 2-Open your n8n instance and create a new workflow.
 3-Click Menu > Import from File and select the downloaded JSON.
 4-Configure your own Google Sheets Credentials within the nodes to start capturing leads!
+
+
+
+
