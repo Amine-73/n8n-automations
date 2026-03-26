@@ -23,8 +23,8 @@
       "type": "n8n-nodes-base.googleDriveTrigger",
       "typeVersion": 1,
       "position": [
-        -320,
-        -704
+        -304,
+        -896
       ],
       "id": "628790b1-de40-4817-8b93-9b705f34455d",
       "name": "Google Drive Trigger",
@@ -41,7 +41,7 @@
         "operation": "download",
         "fileId": {
           "__rl": true,
-          "value": "1LTIiOVebnlBS1Pyod8tthJ051VbHeybK",
+          "value": "={{ $json.id }}",
           "mode": "id"
         },
         "options": {}
@@ -49,8 +49,8 @@
       "type": "n8n-nodes-base.googleDrive",
       "typeVersion": 3,
       "position": [
-        -96,
-        -688
+        -80,
+        -880
       ],
       "id": "5f09daba-0a78-4e8b-abd4-a4f2a22d3a6c",
       "name": "Download file",
@@ -70,8 +70,8 @@
       "type": "@n8n/n8n-nodes-langchain.documentDefaultDataLoader",
       "typeVersion": 1.1,
       "position": [
-        272,
-        -416
+        288,
+        -608
       ],
       "id": "70cf1e81-5c97-4ffb-94e9-aefd151e9650",
       "name": "Default Data Loader"
@@ -83,8 +83,8 @@
       "type": "@n8n/n8n-nodes-langchain.textSplitterRecursiveCharacterTextSplitter",
       "typeVersion": 1,
       "position": [
-        368,
-        -240
+        384,
+        -432
       ],
       "id": "66904f2c-a2f3-4934-b3dc-2fa0dd57f0fa",
       "name": "Recursive Character Text Splitter"
@@ -96,8 +96,8 @@
       "type": "@n8n/n8n-nodes-langchain.embeddingsMistralCloud",
       "typeVersion": 1,
       "position": [
-        80,
-        -416
+        96,
+        -608
       ],
       "id": "56e0bca5-2104-43b6-91c1-8d1f10394c18",
       "name": "Embeddings Mistral Cloud",
@@ -118,15 +118,14 @@
           "cachedResultName": "n8n-mistral-index"
         },
         "options": {
-          "clearNamespace": false,
-          "pineconeNamespace": "myPincone "
+          "clearNamespace": false
         }
       },
       "type": "@n8n/n8n-nodes-langchain.vectorStorePinecone",
       "typeVersion": 1.3,
       "position": [
-        128,
-        -592
+        144,
+        -784
       ],
       "id": "dfc986ec-3ae1-4260-ac5d-9b145b3476c0",
       "name": "Pinecone Vector Store",
@@ -144,8 +143,8 @@
       "type": "@n8n/n8n-nodes-langchain.agent",
       "typeVersion": 3.1,
       "position": [
-        -544,
-        -544
+        -768,
+        -880
       ],
       "id": "ba78d982-f826-456a-aefe-735095fe8efe",
       "name": "AI Agent"
@@ -157,8 +156,8 @@
       "type": "@n8n/n8n-nodes-langchain.chatTrigger",
       "typeVersion": 1.4,
       "position": [
-        -816,
-        -544
+        -1040,
+        -880
       ],
       "id": "84fdac37-b55c-420f-9e4d-b82e51df4ae9",
       "name": "When chat message received",
@@ -171,8 +170,8 @@
       },
       "type": "n8n-nodes-base.stickyNote",
       "position": [
-        -608,
-        -688
+        -432,
+        -880
       ],
       "typeVersion": 1,
       "id": "450105d2-15bd-43cc-8ec5-507c8cce88c7",
@@ -186,8 +185,8 @@
       },
       "type": "n8n-nodes-base.stickyNote",
       "position": [
-        -912,
-        -528
+        -1136,
+        -864
       ],
       "typeVersion": 1,
       "id": "15542163-7619-43b3-878b-ce78f5a46a8e",
@@ -201,8 +200,8 @@
       },
       "type": "n8n-nodes-base.stickyNote",
       "position": [
-        176,
-        -624
+        192,
+        -816
       ],
       "typeVersion": 1,
       "id": "79119890-57ea-496e-8fff-1b705ed174dd",
@@ -216,39 +215,12 @@
       },
       "type": "n8n-nodes-base.stickyNote",
       "position": [
-        0,
-        -400
+        16,
+        -592
       ],
       "typeVersion": 1,
       "id": "d3e56e93-f801-4450-bc94-1b84d28b2e63",
       "name": "Sticky Note3"
-    },
-    {
-      "parameters": {
-        "mode": "retrieve-as-tool",
-        "toolDescription": "Use this tool base to answer questions from the user and Return ",
-        "pineconeIndex": {
-          "__rl": true,
-          "value": "n8n-mistral-index",
-          "mode": "list",
-          "cachedResultName": "n8n-mistral-index"
-        },
-        "options": {}
-      },
-      "type": "@n8n/n8n-nodes-langchain.vectorStorePinecone",
-      "typeVersion": 1.3,
-      "position": [
-        -416,
-        -336
-      ],
-      "id": "b6a7672f-6d88-4d6e-ad46-07e6bcd3b1ff",
-      "name": "Pinecone Vector Store for chatbot",
-      "credentials": {
-        "pineconeApi": {
-          "id": "Ym2L27cVGUt4zajm",
-          "name": "PineconeApi account"
-        }
-      }
     },
     {
       "parameters": {
@@ -258,8 +230,8 @@
       "type": "@n8n/n8n-nodes-langchain.lmChatMistralCloud",
       "typeVersion": 1,
       "position": [
-        -640,
-        -368
+        -864,
+        -704
       ],
       "id": "84b7a2d4-5009-4b10-a03a-1e22a7713331",
       "name": "Mistral Cloud Chat Model",
@@ -277,8 +249,8 @@
       "type": "@n8n/n8n-nodes-langchain.embeddingsMistralCloud",
       "typeVersion": 1,
       "position": [
-        -384,
-        -160
+        -608,
+        -496
       ],
       "id": "6a26a8cc-86ed-4266-b314-a2f6860287f2",
       "name": "Embeddings Mistral Cloud1",
@@ -286,6 +258,33 @@
         "mistralCloudApi": {
           "id": "Ub0HhNHCwZ9KTBmg",
           "name": "Mistral Cloud account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "mode": "retrieve-as-tool",
+        "toolDescription": "Search the VOLOIO knowledge base. Your input MUST be a JSON object with a single key 'query'. Example: {'query': 'shipping times'}. Do not send plain text.",
+        "pineconeIndex": {
+          "__rl": true,
+          "value": "n8n-mistral-index",
+          "mode": "list",
+          "cachedResultName": "n8n-mistral-index"
+        },
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.vectorStorePinecone",
+      "typeVersion": 1.3,
+      "position": [
+        -656,
+        -672
+      ],
+      "id": "c9770170-3de1-4237-8661-2e92a1541540",
+      "name": "Pinecone Vector Store1",
+      "credentials": {
+        "pineconeApi": {
+          "id": "Ym2L27cVGUt4zajm",
+          "name": "PineconeApi account"
         }
       }
     }
@@ -358,17 +357,6 @@
         ]
       ]
     },
-    "Pinecone Vector Store for chatbot": {
-      "ai_tool": [
-        [
-          {
-            "node": "AI Agent",
-            "type": "ai_tool",
-            "index": 0
-          }
-        ]
-      ]
-    },
     "Mistral Cloud Chat Model": {
       "ai_languageModel": [
         [
@@ -384,8 +372,24 @@
       "ai_embedding": [
         [
           {
-            "node": "Pinecone Vector Store for chatbot",
+            "node": "Pinecone Vector Store1",
             "type": "ai_embedding",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "AI Agent": {
+      "main": [
+        []
+      ]
+    },
+    "Pinecone Vector Store1": {
+      "ai_tool": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_tool",
             "index": 0
           }
         ]
@@ -398,7 +402,7 @@
     "binaryMode": "separate",
     "availableInMCP": false
   },
-  "versionId": "003561aa-d0b1-4fd0-bdf4-33ce958cc07b",
+  "versionId": "c3d56400-1ca6-42ef-aad6-12ac02520c58",
   "meta": {
     "templateCredsSetupCompleted": true,
     "instanceId": "d18f9a118c484c60eb77c3ff16d5a2ac0623b8773cdf0ce31c7a0431b4f32afb"
