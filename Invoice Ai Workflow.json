@@ -23,8 +23,8 @@
       "type": "n8n-nodes-base.googleDriveTrigger",
       "typeVersion": 1,
       "position": [
-        0,
-        0
+        16,
+        -224
       ],
       "id": "15a94d97-ceb4-4bc0-8d63-ee03712eac0c",
       "name": "Google Drive Trigger",
@@ -50,7 +50,7 @@
       "typeVersion": 3,
       "position": [
         208,
-        0
+        176
       ],
       "id": "b7ab769f-4ea5-4a2f-a612-e27bcd964e63",
       "name": "Download file",
@@ -68,8 +68,8 @@
       },
       "type": "n8n-nodes-base.stickyNote",
       "position": [
-        352,
-        -32
+        240,
+        48
       ],
       "typeVersion": 1,
       "id": "7009c4af-6a11-4c3b-8d9a-f0c97310a1c5",
@@ -83,8 +83,8 @@
       "type": "n8n-nodes-base.extractFromFile",
       "typeVersion": 1.1,
       "position": [
-        416,
-        0
+        368,
+        48
       ],
       "id": "55064940-2114-4b33-aa6b-1a4c76bb48f1",
       "name": "Extract from File"
@@ -149,8 +149,8 @@
       "type": "@n8n/n8n-nodes-langchain.informationExtractor",
       "typeVersion": 1.2,
       "position": [
-        624,
-        0
+        544,
+        -112
       ],
       "id": "538c3d4c-339b-4ffe-a7bf-3c328f9fe763",
       "name": "Information Extractor"
@@ -163,8 +163,8 @@
       "type": "@n8n/n8n-nodes-langchain.lmChatMistralCloud",
       "typeVersion": 1,
       "position": [
-        560,
-        208
+        528,
+        112
       ],
       "id": "91ddd2c6-34b3-47ff-b790-bfb24ba95bea",
       "name": "Mistral Cloud Chat Model",
@@ -172,6 +172,204 @@
         "mistralCloudApi": {
           "id": "Ub0HhNHCwZ9KTBmg",
           "name": "Mistral Cloud account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "authentication": "serviceAccount",
+        "operation": "append",
+        "documentId": {
+          "__rl": true,
+          "value": "1qGAvJk35S_x8PrIGwlSP2QpZ0wIteBwx9SLnMbBFv9I",
+          "mode": "list",
+          "cachedResultName": "Invoices ",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1qGAvJk35S_x8PrIGwlSP2QpZ0wIteBwx9SLnMbBFv9I/edit?usp=drivesdk"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": "gid=0",
+          "mode": "list",
+          "cachedResultName": "Sheet1",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1qGAvJk35S_x8PrIGwlSP2QpZ0wIteBwx9SLnMbBFv9I/edit#gid=0"
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "Invoice Number": "={{ $json.output['Invoice Number'] }}",
+            "Order Number": "={{ $json.output['Order Number'] }}",
+            "Invoice Date": "={{ $json.output['Invoice Date'] }}",
+            "From": "={{ $json.output.From }}",
+            "Total Due": "={{ $json.output['Total Due'] }}",
+            "Service": "={{ $json.output.Service }}",
+            "To": "={{ $json.output.To }}",
+            "Email Client": "={{ $json.output['Email Client'] }}",
+            "Email Recipient": "={{ $json.output['Email recipient'] }}"
+          },
+          "matchingColumns": [],
+          "schema": [
+            {
+              "id": "Invoice Number",
+              "displayName": "Invoice Number",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Order Number",
+              "displayName": "Order Number",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Invoice Date",
+              "displayName": "Invoice Date",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "From",
+              "displayName": "From",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "To",
+              "displayName": "To",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Email Client",
+              "displayName": "Email Client",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Email Recipient",
+              "displayName": "Email Recipient",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Service",
+              "displayName": "Service",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Total Due",
+              "displayName": "Total Due",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.7,
+      "position": [
+        848,
+        16
+      ],
+      "id": "3a7e05a9-c147-40d3-b1f2-3fbcb31a5ce2",
+      "name": "Append row in sheet",
+      "credentials": {
+        "googleApi": {
+          "id": "U8TnYqF6m4fk9vFP",
+          "name": "Google Sheets account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "authentication": "serviceAccount",
+        "sendTo": "aminchana.business@gmail.com",
+        "subject": "=Invoice Number  {{ $('Append row in sheet').item.json['Invoice Number'] }}",
+        "emailType": "text",
+        "message": "={{ $json.content.parts[0].text }}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.gmail",
+      "typeVersion": 2.2,
+      "position": [
+        1040,
+        224
+      ],
+      "id": "a72ec4f9-d14d-41a2-a2a4-bbd832550f65",
+      "name": "Send a message",
+      "webhookId": "4a2e2786-6379-4f96-a45b-07e12cf401d5",
+      "credentials": {
+        "googleApi": {
+          "id": "A4OYAu5ZStucw9Oi",
+          "name": "Google Service Account account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "modelId": {
+          "__rl": true,
+          "value": "models/gemini-3-flash-preview",
+          "mode": "list",
+          "cachedResultName": "models/gemini-3-flash-preview"
+        },
+        "messages": {
+          "values": [
+            {
+              "content": "=Invoice Number : {{ $json['Invoice Number'] }}\nOrder Number : {{ $json['Order Number'] }}\nFrom: {{ $json.From }}\nInvoice Date : {{ $json['Invoice Date'] }}\nTo : {{ $json.To }}\nTotal Due : {{ $json['Total Due'] }}\nService : {{ $json.Service }}\nClient Email : {{ $json['Email Client'] }}\nEmail Recipient : {{ $json['Email Recipient'] }}\n"
+            },
+            {
+              "content": "#Overview \nYou are an email expert at Company Chana . You will recieve invoice Information .Your job is to notify the finance team that invoice has been treated\n\n#Output\noutput the following parameters separately :\nSubject \nEmail ",
+              "role": "model"
+            }
+          ]
+        },
+        "jsonOutput": true,
+        "builtInTools": {},
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.googleGemini",
+      "typeVersion": 1.1,
+      "position": [
+        1056,
+        16
+      ],
+      "id": "68294ed8-d2f0-4ee9-8160-bf49224c50e5",
+      "name": "Message a model",
+      "credentials": {
+        "googlePalmApi": {
+          "id": "snhlbSmvsTqfxHId",
+          "name": "Google Gemini(PaLM) Api account"
         }
       }
     }
@@ -366,6 +564,39 @@
           }
         ]
       ]
+    },
+    "Information Extractor": {
+      "main": [
+        [
+          {
+            "node": "Append row in sheet",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Append row in sheet": {
+      "main": [
+        [
+          {
+            "node": "Message a model",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Message a model": {
+      "main": [
+        [
+          {
+            "node": "Send a message",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
     }
   },
   "active": false,
@@ -374,7 +605,7 @@
     "binaryMode": "separate",
     "availableInMCP": false
   },
-  "versionId": "1d875bd8-d56a-4ea1-ab52-b2a4b190b66f",
+  "versionId": "7a7cab38-58e3-4b9f-9b43-aa106198e823",
   "meta": {
     "templateCredsSetupCompleted": true,
     "instanceId": "d18f9a118c484c60eb77c3ff16d5a2ac0623b8773cdf0ce31c7a0431b4f32afb"
