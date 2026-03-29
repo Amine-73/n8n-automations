@@ -1,0 +1,384 @@
+{
+  "name": "Invoice Ai Workflow",
+  "nodes": [
+    {
+      "parameters": {
+        "pollTimes": {
+          "item": [
+            {
+              "mode": "everyMinute"
+            }
+          ]
+        },
+        "authentication": "serviceAccount",
+        "triggerOn": "specificFile",
+        "fileToWatch": {
+          "__rl": true,
+          "value": "1pGNCQRk2ismsTIm4JrNaYAts2LohpK4O",
+          "mode": "list",
+          "cachedResultName": "invoice.pdf",
+          "cachedResultUrl": "https://drive.google.com/file/d/1pGNCQRk2ismsTIm4JrNaYAts2LohpK4O/view?usp=drivesdk"
+        }
+      },
+      "type": "n8n-nodes-base.googleDriveTrigger",
+      "typeVersion": 1,
+      "position": [
+        0,
+        0
+      ],
+      "id": "15a94d97-ceb4-4bc0-8d63-ee03712eac0c",
+      "name": "Google Drive Trigger",
+      "credentials": {
+        "googleApi": {
+          "id": "A4OYAu5ZStucw9Oi",
+          "name": "Google Service Account account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "authentication": "serviceAccount",
+        "operation": "download",
+        "fileId": {
+          "__rl": true,
+          "value": "={{ $json.id }}",
+          "mode": "id"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleDrive",
+      "typeVersion": 3,
+      "position": [
+        208,
+        0
+      ],
+      "id": "b7ab769f-4ea5-4a2f-a612-e27bcd964e63",
+      "name": "Download file",
+      "credentials": {
+        "googleApi": {
+          "id": "A4OYAu5ZStucw9Oi",
+          "name": "Google Service Account account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "content": "node for extracte info from the node before to convert them from binary to text ",
+        "height": 80
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        352,
+        -32
+      ],
+      "typeVersion": 1,
+      "id": "7009c4af-6a11-4c3b-8d9a-f0c97310a1c5",
+      "name": "Sticky Note"
+    },
+    {
+      "parameters": {
+        "operation": "pdf",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.extractFromFile",
+      "typeVersion": 1.1,
+      "position": [
+        416,
+        0
+      ],
+      "id": "55064940-2114-4b33-aa6b-1a4c76bb48f1",
+      "name": "Extract from File"
+    },
+    {
+      "parameters": {
+        "text": "={{ $json.text }}",
+        "attributes": {
+          "attributes": [
+            {
+              "name": "Invoice Number",
+              "description": "The number of Invoice ",
+              "required": true
+            },
+            {
+              "name": "Order Number",
+              "type": "number",
+              "description": "The Number of Order",
+              "required": true
+            },
+            {
+              "name": "Invoice Date",
+              "type": "date",
+              "description": "The Date when sended the Invoice ",
+              "required": true
+            },
+            {
+              "name": "From",
+              "description": "Client Name",
+              "required": true
+            },
+            {
+              "name": "Total Due",
+              "type": "number",
+              "description": "The Total Price of Invoice ",
+              "required": true
+            },
+            {
+              "name": "Service",
+              "description": "What is the server you pay for ",
+              "required": true
+            },
+            {
+              "name": "To",
+              "description": "The recipient",
+              "required": true
+            },
+            {
+              "name": "Email Client",
+              "description": "The email of Client",
+              "required": true
+            },
+            {
+              "name": "Email recipient",
+              "description": "The Email of recipient",
+              "required": true
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.informationExtractor",
+      "typeVersion": 1.2,
+      "position": [
+        624,
+        0
+      ],
+      "id": "538c3d4c-339b-4ffe-a7bf-3c328f9fe763",
+      "name": "Information Extractor"
+    },
+    {
+      "parameters": {
+        "model": "mistral-large-latest",
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatMistralCloud",
+      "typeVersion": 1,
+      "position": [
+        560,
+        208
+      ],
+      "id": "91ddd2c6-34b3-47ff-b790-bfb24ba95bea",
+      "name": "Mistral Cloud Chat Model",
+      "credentials": {
+        "mistralCloudApi": {
+          "id": "Ub0HhNHCwZ9KTBmg",
+          "name": "Mistral Cloud account"
+        }
+      }
+    }
+  ],
+  "pinData": {
+    "Google Drive Trigger": [
+      {
+        "json": {
+          "parents": [
+            "1ChO0rtVgkpZovlDeAPLR9OaqIyysEpS1"
+          ],
+          "lastModifyingUser": {
+            "displayName": "aminchana.business",
+            "kind": "drive#user",
+            "me": false,
+            "permissionId": "02423676022225283239",
+            "emailAddress": "aminchana.business@gmail.com",
+            "photoLink": "https://lh3.googleusercontent.com/a-/ALV-UjUo1iiq74aeXEssLTol7IpvCmymiKgxMwOH-r7B4BoskICR3Q=s64"
+          },
+          "owners": [
+            {
+              "displayName": "aminchana.business",
+              "kind": "drive#user",
+              "me": false,
+              "permissionId": "02423676022225283239",
+              "emailAddress": "aminchana.business@gmail.com",
+              "photoLink": "https://lh3.googleusercontent.com/a-/ALV-UjUo1iiq74aeXEssLTol7IpvCmymiKgxMwOH-r7B4BoskICR3Q=s64"
+            }
+          ],
+          "permissions": [
+            {
+              "kind": "drive#permission",
+              "id": "02423676022225283239",
+              "type": "user",
+              "emailAddress": "aminchana.business@gmail.com",
+              "role": "owner",
+              "displayName": "aminchana.business",
+              "photoLink": "https://lh3.googleusercontent.com/a-/ALV-UjUo1iiq74aeXEssLTol7IpvCmymiKgxMwOH-r7B4BoskICR3Q=s64",
+              "deleted": false,
+              "pendingOwner": false
+            },
+            {
+              "kind": "drive#permission",
+              "id": "10537891956635172805",
+              "type": "user",
+              "emailAddress": "n8n-sheets@my-project-00001-478123.iam.gserviceaccount.com",
+              "role": "writer",
+              "displayName": "n8n-sheets@my-project-00001-478123.iam.gserviceaccount.com",
+              "photoLink": "https://lh3.googleusercontent.com/a/ACg8ocK6XAMjxCwFM73dPnKyEGkRj-CvbAxNZOSYWtguENQqFNEWwq8=s64",
+              "deleted": false,
+              "pendingOwner": false
+            }
+          ],
+          "spaces": [
+            "drive"
+          ],
+          "capabilities": {
+            "canAcceptOwnership": false,
+            "canAddChildren": false,
+            "canAddMyDriveParent": false,
+            "canChangeCopyRequiresWriterPermission": false,
+            "canChangeItemDownloadRestriction": false,
+            "canChangeSecurityUpdateEnabled": false,
+            "canChangeViewersCanCopyContent": false,
+            "canComment": true,
+            "canCopy": true,
+            "canDelete": false,
+            "canDisableInheritedPermissions": false,
+            "canDownload": true,
+            "canEdit": true,
+            "canEnableInheritedPermissions": true,
+            "canListChildren": false,
+            "canModifyContent": true,
+            "canModifyContentRestriction": true,
+            "canModifyEditorContentRestriction": true,
+            "canModifyOwnerContentRestriction": false,
+            "canModifyLabels": false,
+            "canMoveChildrenWithinDrive": false,
+            "canMoveItemIntoTeamDrive": false,
+            "canMoveItemOutOfDrive": false,
+            "canMoveItemWithinDrive": true,
+            "canReadLabels": false,
+            "canReadRevisions": true,
+            "canRemoveChildren": false,
+            "canRemoveContentRestriction": false,
+            "canRemoveMyDriveParent": true,
+            "canRename": true,
+            "canShare": true,
+            "canTrash": false,
+            "canUntrash": false
+          },
+          "permissionIds": [
+            "02423676022225283239",
+            "10537891956635172805"
+          ],
+          "linkShareMetadata": {
+            "securityUpdateEligible": false,
+            "securityUpdateEnabled": true
+          },
+          "downloadRestrictions": {
+            "itemDownloadRestriction": {
+              "restrictedForReaders": false,
+              "restrictedForWriters": false
+            },
+            "effectiveDownloadRestrictionWithContext": {
+              "restrictedForReaders": false,
+              "restrictedForWriters": false
+            }
+          },
+          "kind": "drive#file",
+          "id": "1pGNCQRk2ismsTIm4JrNaYAts2LohpK4O",
+          "name": "invoice.pdf",
+          "mimeType": "application/pdf",
+          "starred": false,
+          "trashed": false,
+          "explicitlyTrashed": false,
+          "version": "3",
+          "webContentLink": "https://drive.google.com/uc?id=1pGNCQRk2ismsTIm4JrNaYAts2LohpK4O&export=download",
+          "webViewLink": "https://drive.google.com/file/d/1pGNCQRk2ismsTIm4JrNaYAts2LohpK4O/view?usp=drivesdk",
+          "iconLink": "https://drive-thirdparty.googleusercontent.com/16/type/application/pdf",
+          "hasThumbnail": true,
+          "thumbnailLink": "https://lh3.googleusercontent.com/drive-storage/AJQWtBNlBAfHTVHTMQyzN6DFOcjZKktsZvbF-HCrz_rPXiVvX6DPuTI4oDwapBVQ8K2etxSMlhb2FDo7Ze1X1b1nYc0CFEbkefRUBVf4GoKFy_wH_3JqGsU=s220",
+          "thumbnailVersion": "1",
+          "viewedByMe": false,
+          "createdTime": "2026-03-29T00:29:13.096Z",
+          "modifiedTime": "2026-03-29T00:28:49.000Z",
+          "modifiedByMe": false,
+          "shared": true,
+          "ownedByMe": false,
+          "viewersCanCopyContent": true,
+          "copyRequiresWriterPermission": false,
+          "writersCanShare": true,
+          "originalFilename": "invoice.pdf",
+          "fullFileExtension": "pdf",
+          "fileExtension": "pdf",
+          "md5Checksum": "c1bda6d4249306eeb6b30da641eb2ad8",
+          "sha1Checksum": "54243509f843e8ec9f2913715d9ae0f6df14cdde",
+          "sha256Checksum": "c2de358a0974f9b047aed8e457def7d4b1b39170f44819ec3152b42db787d72e",
+          "size": "43627",
+          "quotaBytesUsed": "43627",
+          "headRevisionId": "0B62eL54DZGHWRkc0bU1QYzBOUjF6ejNyV295NnFGaHpCTEZnPQ",
+          "isAppAuthorized": false,
+          "inheritedPermissionsDisabled": false
+        },
+        "pairedItem": {
+          "item": 0
+        }
+      }
+    ]
+  },
+  "connections": {
+    "Google Drive Trigger": {
+      "main": [
+        [
+          {
+            "node": "Download file",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Download file": {
+      "main": [
+        [
+          {
+            "node": "Extract from File",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Extract from File": {
+      "main": [
+        [
+          {
+            "node": "Information Extractor",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Mistral Cloud Chat Model": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "Information Extractor",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1",
+    "binaryMode": "separate",
+    "availableInMCP": false
+  },
+  "versionId": "1d875bd8-d56a-4ea1-ab52-b2a4b190b66f",
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": "d18f9a118c484c60eb77c3ff16d5a2ac0623b8773cdf0ce31c7a0431b4f32afb"
+  },
+  "id": "gm11l5VkJFyHHPm6",
+  "tags": []
+}
