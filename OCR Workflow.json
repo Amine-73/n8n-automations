@@ -1,0 +1,283 @@
+{
+  "name": "OCR Workflow",
+  "nodes": [
+    {
+      "parameters": {
+        "formTitle": "OCR Invoice",
+        "formDescription": "Please upload you invoice",
+        "formFields": {
+          "values": [
+            {
+              "fieldLabel": "data",
+              "fieldType": "file",
+              "multipleFiles": false
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.formTrigger",
+      "typeVersion": 2.5,
+      "position": [
+        0,
+        -96
+      ],
+      "id": "47af335b-3013-4eb7-bd4f-5bf5ae2779b7",
+      "name": "On form submission",
+      "webhookId": "fbe42102-5716-4a15-9fb2-da496931e678"
+    },
+    {
+      "parameters": {
+        "url": "https://api.mistral.ai/v1/files",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "Authorization",
+              "value": "Bearer 3Scakl2x23hWhQPJ5Z4mdhvQ3O9NvnC5"
+            }
+          ]
+        },
+        "sendBody": true,
+        "contentType": "multipart-form-data",
+        "bodyParameters": {
+          "parameters": [
+            {
+              "name": "purpose",
+              "value": "ocr"
+            },
+            {
+              "parameterType": "formBinaryData",
+              "name": "file",
+              "inputDataFieldName": "data"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.4,
+      "position": [
+        192,
+        64
+      ],
+      "id": "93333bab-fd27-450b-8e03-eb97fd2ba33d",
+      "name": "Upload PDF"
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://api.mistral.ai/v1/ocr",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "Authorization",
+              "value": "Bearer 3Scakl2x23hWhQPJ5Z4mdhvQ3O9NvnC5"
+            }
+          ]
+        },
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={\n  \"model\": \"mistral-ocr-latest\",\n  \"document\": {\n    \"type\": \"document_url\",\n    \"document_url\": \"{{ $json.url }}\"\n  },\n  \"table_format\": \"html\",\n  \"include_image_base64\": true\n} ",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.4,
+      "position": [
+        640,
+        32
+      ],
+      "id": "dc8f3815-0d61-4b59-b782-cf4196bcdfd2",
+      "name": "OCR RESULT"
+    },
+    {
+      "parameters": {
+        "text": "={{ $json.pages[0].markdown }}",
+        "attributes": {
+          "attributes": [
+            {
+              "name": "From",
+              "description": "The Company Name",
+              "required": true
+            },
+            {
+              "name": "To",
+              "description": "The recepient ",
+              "required": true
+            },
+            {
+              "name": "Order Number",
+              "description": "The Order Of Number"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.informationExtractor",
+      "typeVersion": 1.2,
+      "position": [
+        848,
+        -48
+      ],
+      "id": "d75cbdbc-bf36-413a-b40d-585e17ad2db8",
+      "name": "Information Extractor"
+    },
+    {
+      "parameters": {
+        "model": "mistral-large-latest",
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatMistralCloud",
+      "typeVersion": 1,
+      "position": [
+        848,
+        192
+      ],
+      "id": "6cdedd94-5edf-4061-8b97-0a21ed63e489",
+      "name": "Mistral Cloud Chat Model",
+      "credentials": {
+        "mistralCloudApi": {
+          "id": "Ub0HhNHCwZ9KTBmg",
+          "name": "Mistral Cloud account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "url": "=https://api.mistral.ai/v1/files/{{ $json.data[0].id }}/url",
+        "sendQuery": true,
+        "queryParameters": {
+          "parameters": [
+            {
+              "name": "expiry",
+              "value": "24"
+            }
+          ]
+        },
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "Accept",
+              "value": "application/json"
+            },
+            {
+              "name": "Authorization",
+              "value": "Bearer 3Scakl2x23hWhQPJ5Z4mdhvQ3O9NvnC5"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.4,
+      "position": [
+        432,
+        -64
+      ],
+      "id": "ddd366a5-79c6-4015-a060-561cef1927e9",
+      "name": "Sign URL"
+    },
+    {
+      "parameters": {
+        "content": "Mistral we use almostly mistral to extract text from file take it by phone or extract from image ",
+        "height": 80
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        784,
+        192
+      ],
+      "typeVersion": 1,
+      "id": "823da53c-bb8c-4b13-8f9c-a063f0450a1d",
+      "name": "Sticky Note"
+    },
+    {
+      "parameters": {
+        "content": "get file by submit then upload pdf then convert this pdf to URL  then convert url to table of info then give it to LLM to extract the data you need to send  ",
+        "height": 80,
+        "width": 384
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        -128,
+        -192
+      ],
+      "typeVersion": 1,
+      "id": "6e39cf10-546a-46e9-9d1e-e8bafc9ed628",
+      "name": "Sticky Note1"
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "On form submission": {
+      "main": [
+        [
+          {
+            "node": "Upload PDF",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Upload PDF": {
+      "main": [
+        [
+          {
+            "node": "Sign URL",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "OCR RESULT": {
+      "main": [
+        [
+          {
+            "node": "Information Extractor",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Mistral Cloud Chat Model": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "Information Extractor",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Sign URL": {
+      "main": [
+        [
+          {
+            "node": "OCR RESULT",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1",
+    "binaryMode": "separate",
+    "availableInMCP": false
+  },
+  "versionId": "ee8ffe46-d79d-4974-a8b2-9dac926541e3",
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": "d18f9a118c484c60eb77c3ff16d5a2ac0623b8773cdf0ce31c7a0431b4f32afb"
+  },
+  "id": "hO5FyW9hmrGnIKjv",
+  "tags": []
+}
