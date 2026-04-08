@@ -1,0 +1,262 @@
+{
+  "name": "Generat Image",
+  "nodes": [
+    {
+      "parameters": {},
+      "type": "n8n-nodes-base.manualTrigger",
+      "typeVersion": 1,
+      "position": [
+        -336,
+        -16
+      ],
+      "id": "907c0835-e058-42b0-bb2b-ef8d1d6be7c6",
+      "name": "When clicking ‘Execute workflow’"
+    },
+    {
+      "parameters": {
+        "url": "=https://api.mistral.ai/v1/files/{{ $json.outputs[1].content[1].file_id }}/content ",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "Accept",
+              "value": "application/octet-stream"
+            },
+            {
+              "name": "Accept-Encoding",
+              "value": "gzip, deflate, zstd"
+            },
+            {
+              "name": "Authorization",
+              "value": "Bearer Q8KVICd5cAnuBIUVGUMdgOUrJJyrxaLm"
+            }
+          ]
+        },
+        "options": {
+          "redirect": {
+            "redirect": {}
+          }
+        }
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.4,
+      "position": [
+        -32,
+        -288
+      ],
+      "id": "df519da4-7cc4-430c-9aac-bbedf28f2fbe",
+      "name": "HTTP Request2"
+    },
+    {
+      "parameters": {
+        "jsCode": "for (const item of items) {\n  item.binary.data.fileName = 'image_generated_0';\n  item.binary.data.mimeType = 'image/png';\n}\nreturn items;"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        176,
+        -288
+      ],
+      "id": "acba0faf-6e65-4cda-8b97-b7303fe1c351",
+      "name": "Code in JavaScript"
+    },
+    {
+      "parameters": {
+        "content": "What it does:\nIt sends your PDF/image to Mistral's server.\t\nResult:\nYou get a File ID.",
+        "height": 112
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        112,
+        176
+      ],
+      "typeVersion": 1,
+      "id": "be008b0d-d2cb-4771-9dcb-465a918a7b1b",
+      "name": "Sticky Note"
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://api.mistral.ai/v1/agents",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "Accept",
+              "value": "application/json"
+            },
+            {
+              "name": "Authorization",
+              "value": "Bearer Q8KVICd5cAnuBIUVGUMdgOUrJJyrxaLm"
+            }
+          ]
+        },
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "{\n  \"model\": \"mistral-medium-latest\",\n  \"name\": \"Image Generation Agent\",\n  \"description\": \"Agent used to generate images.\",\n  \"instructions\": \"Use the image generation tool when you have to create images.\",\n  \"tools\": [\n    {\n      \"type\": \"image_generation\"\n    }\n  ],\n  \"completion_args\": {\n    \"temperature\": 0.3,\n    \"top_p\": 0.95\n  }\n}",
+        "options": {
+          "redirect": {
+            "redirect": {}
+          }
+        }
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.4,
+      "position": [
+        -48,
+        144
+      ],
+      "id": "40ccd492-6b80-4647-951a-557a94fc2d16",
+      "name": "Upload File"
+    },
+    {
+      "parameters": {
+        "content": "What it does:\nIt tells Mistral to read that specific File ID.\nThe Result :\nYou get raw Markdown text.",
+        "height": 112
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        128,
+        -80
+      ],
+      "typeVersion": 1,
+      "id": "657966be-b2e5-4fd1-93a7-c571b03d273a",
+      "name": "Sticky Note1"
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://api.mistral.ai/v1/conversations",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "Accept",
+              "value": "application/json"
+            },
+            {
+              "name": "Authorization",
+              "value": "Bearer Q8KVICd5cAnuBIUVGUMdgOUrJJyrxaLm"
+            }
+          ]
+        },
+        "sendBody": true,
+        "bodyParameters": {
+          "parameters": [
+            {
+              "name": "inputs",
+              "value": "Generate Messi and vini jr in staduim "
+            },
+            {
+              "name": "stream",
+              "value": "false"
+            },
+            {
+              "name": "agent_id",
+              "value": "={{ $json.id }}"
+            }
+          ]
+        },
+        "options": {
+          "redirect": {
+            "redirect": {}
+          }
+        }
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.4,
+      "position": [
+        -48,
+        -112
+      ],
+      "id": "8f5c6278-db54-4b36-a6f4-d779d30d1d2a",
+      "name": "OCR Request"
+    },
+    {
+      "parameters": {
+        "content": "What it does:\nIt transforms the messy text into organized data.\nThe Result :\nYou get a clean JSON object.",
+        "height": 128
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        -304,
+        -304
+      ],
+      "typeVersion": 1,
+      "id": "cd5f830e-c9b3-4544-b7d8-738b3992732d",
+      "name": "Sticky Note2"
+    },
+    {
+      "parameters": {
+        "content": "1-Sets the Filename: It gives the file a name (e.g., invoice.pdf or image.png).\n2-Sets the MimeType: It identifies the file type so your computer knows how to open it."
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        112,
+        -416
+      ],
+      "typeVersion": 1,
+      "id": "0a9fa74c-03a4-41b5-8dbf-a5fa4e530708",
+      "name": "Sticky Note3"
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "When clicking ‘Execute workflow’": {
+      "main": [
+        [
+          {
+            "node": "Upload File",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "HTTP Request2": {
+      "main": [
+        [
+          {
+            "node": "Code in JavaScript",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Upload File": {
+      "main": [
+        [
+          {
+            "node": "OCR Request",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "OCR Request": {
+      "main": [
+        [
+          {
+            "node": "HTTP Request2",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1",
+    "binaryMode": "separate",
+    "availableInMCP": false
+  },
+  "versionId": "80d46791-b0eb-4b23-9e6e-2628eb36fab2",
+  "meta": {
+    "instanceId": "d18f9a118c484c60eb77c3ff16d5a2ac0623b8773cdf0ce31c7a0431b4f32afb"
+  },
+  "id": "29eoFekN5VxDE21z",
+  "tags": []
+}
