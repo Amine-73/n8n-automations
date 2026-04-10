@@ -1,0 +1,137 @@
+{
+  "name": "Linkdin Post",
+  "nodes": [
+    {
+      "parameters": {},
+      "type": "n8n-nodes-base.manualTrigger",
+      "typeVersion": 1,
+      "position": [
+        -416,
+        0
+      ],
+      "id": "ed0a6cdc-a07e-4bfa-9e89-2d485560095c",
+      "name": "When clicking ‘Execute workflow’"
+    },
+    {
+      "parameters": {
+        "authentication": "serviceAccount",
+        "documentId": {
+          "__rl": true,
+          "value": "1lQ-LbrG_5gj5XVDMmpxLW_lwlkXvElo5tmp9ZGjJI5U",
+          "mode": "list",
+          "cachedResultName": "imageGeneration",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1lQ-LbrG_5gj5XVDMmpxLW_lwlkXvElo5tmp9ZGjJI5U/edit?usp=drivesdk"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": "gid=0",
+          "mode": "list",
+          "cachedResultName": "Sheet1",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1lQ-LbrG_5gj5XVDMmpxLW_lwlkXvElo5tmp9ZGjJI5U/edit#gid=0"
+        },
+        "filtersUI": {
+          "values": [
+            {
+              "lookupColumn": "Post Status",
+              "lookupValue": "To Create"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.7,
+      "position": [
+        -208,
+        0
+      ],
+      "id": "3a63615c-cb76-4bb1-8a37-2331c34bdc79",
+      "name": "Get Staus To Create",
+      "credentials": {
+        "googleApi": {
+          "id": "U8TnYqF6m4fk9vFP",
+          "name": "Google Sheets account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "promptType": "define",
+        "text": "=Topic of Post :  {{ $json.Subject }}\nAudience Target: {{ $json.Audience }}",
+        "options": {
+          "systemMessage": "You are a professional LinkedIn content creator specializing in educational, engaging, and high-value posts.\n\nYour task is to write a LinkedIn post based on the input provided.\n\nINPUT:\n- Topic:  {{ $json.Subject }}\n- Target audience:  {{ $json.Audience }}\n\nINSTRUCTIONS:\n1. Start with a strong hook (first 1–2 lines that grab attention).\n2. Write in a clear, concise, and engaging style.\n3. Provide actionable insights or valuable information.\n4. Use short paragraphs (1–2 lines max) for readability.\n5. Avoid jargon unless appropriate for the audience.\n6. Include a storytelling element or relatable example if possible.\n7. End with a call-to-action (question, opinion request, or engagement prompt).\n8. Optionally include 3–5 relevant hashtags at the end.\n\nOUTPUT FORMAT:\n- Hook\n- Body (well-structured, easy to read)\n- Call-to-action\n- Hashtags\n\nEnsure the post feels human, authentic, and optimized for LinkedIn engagement.\nDo not include explanations or meta commentary—only output the final post."
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "typeVersion": 3.1,
+      "position": [
+        0,
+        0
+      ],
+      "id": "b4bc7093-6841-4934-9c3e-8d090d90e032",
+      "name": "LInkin post generation"
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequestTool",
+      "typeVersion": 4.4,
+      "position": [
+        144,
+        256
+      ],
+      "id": "ae2c4a5d-697a-4b91-bc8e-2674c3e938bd",
+      "name": "HTTP Request"
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "When clicking ‘Execute workflow’": {
+      "main": [
+        [
+          {
+            "node": "Get Staus To Create",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Get Staus To Create": {
+      "main": [
+        [
+          {
+            "node": "LInkin post generation",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "HTTP Request": {
+      "ai_tool": [
+        [
+          {
+            "node": "LInkin post generation",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1",
+    "binaryMode": "separate",
+    "availableInMCP": false
+  },
+  "versionId": "3c034455-724d-42f3-b4b8-51b8bf2e7fea",
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": "d18f9a118c484c60eb77c3ff16d5a2ac0623b8773cdf0ce31c7a0431b4f32afb"
+  },
+  "id": "Hl2b8F3RnNKQAmGc",
+  "tags": []
+}
