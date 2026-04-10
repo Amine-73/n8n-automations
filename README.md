@@ -1,41 +1,48 @@
-# n8n-automations
-This is my first automation project built using n8n. It demonstrates a complete "Lead-to-Database" pipeline that includes data validation, custom JavaScript formatting, and conditional routing.
+# n8n Automation Portfolio 🚀
 
+A collection of production-ready n8n workflows demonstrating advanced automation pipelines, AI integrations, and secure data processing.
 
+## 🛠️ Included Workflows
 
-📋 Project Overview
-The goal of this workflow is to take incoming form submissions and automatically organize them into different Google Sheets based on the user's age. It also ensures the submission timestamp is human-readable before being saved.
+| Workflow                   | Key Features                                                            | Tech Stack                 |
+| :------------------------- | :---------------------------------------------------------------------- | :------------------------- |
+| **Lead Capture & Routing** | Form validation, Timezone conversion (Casablanca), Conditional routing. | JS, Google Sheets          |
+| **Mistral AI OCR**         | Two-stage PDF processing, data extraction, and validation.              | Mistral AI, OCR API        |
+| **Stability AI Gen**       | Text-to-image generation with automated cloud storage.                  | Stability AI, Google Drive |
+| **LinkedIn Automation**    | Content generation from structured data (WIP).                          | Gemini 1.5 Flash, G-Sheets |
 
+## 🧪 Technical Core
 
+- **Data Transformation:** Custom JavaScript nodes for complex JSON manipulation and localization.
+- **AI Orchestration:** Managing rate limits and context for Mistral, Stability, and Gemini models.
+- **Security:** Zero-hardcoding policy. All sensitive data is managed via the n8n Credential Manager.
+- **Cloud Integration:** Full integration with Google Cloud Console and Service Accounts.
 
+---
 
-🛠️ How it Works
-Trigger (Webhook/Form): Receives data including Name, Age, Phone, and a default submittedAt timestamp.
-Date Formatting (Code Node): * Uses a custom JavaScript snippet to transform the ISO date (e.g., 2026-03-23T17:57:24) into a clean, readable format: YYYY/MM/DD H:MMpm.
-Adjusts the time specifically for the Africa/Casablanca timezone.
-Conditional Routing (Switch Node):
-Route A: If Age >= 18, the data is sent to the "Greater than 18" Google Sheet.
-Route B: If Age < 18, the data is sent to the "Less than 18" Google Sheet.
-Database Integration: Saves the cleaned data into the appropriate Google Sheets using a Service Account for secure authentication.
+## 🚀 Installation & Local Setup
 
+To use these workflows in your own n8n instance, follow these steps:
 
+### 1. Prerequisites
 
-🧪 Technical Skills Demonstrated
+- **n8n installed** (Desktop app, Docker, or Cloud).
+- **API Keys** for the services you intend to use (Mistral, Stability, or Google Cloud).
 
-Workflow Logic: Using Switch nodes to handle conditional data paths.
-JavaScript: Overwriting JSON objects and using Intl.DateTimeFormat for localization.
-API Integration: Connecting to Google Cloud Console and managing Service Account permissions.
-Data Transformation: Moving data from a raw "Trigger" state to a "Production-ready" spreadsheet format.
+### 2. Import the Workflow
 
+1. Clone this repository or download the specific `.json` file you want to use.
+2. Open your n8n instance and click **New Workflow**.
+3. Go to **Menu > Import from File** and select the `.json` file.
 
+### 3. Configure Credentials (CRITICAL)
 
-🚀 How to Import this Workflow
+The workflows will import with "placeholder" credentials. To make them work:
 
-1-Download the lead-capture-workflow.json file from this repository.
-2-Open your n8n instance and create a new workflow.
-3-Click Menu > Import from File and select the downloaded JSON.
-4-Configure your own Google Sheets Credentials within the nodes to start capturing leads!
+1. Go to the **Credentials** tab in n8n.
+2. Create new credentials for the required services (e.g., _Google Drive OAuth2_, _Header Auth_ for Mistral).
+3. Open the red-flagged nodes in the workflow and select your newly created credentials from the dropdown.
 
+### 4. Setup Environment Variables (Optional)
 
-
-
+If you are using a self-hosted n8n instance and want to use a `.env` file, ensure your `N8N_BLOCK_ENV_VAR_ACCESS` is set to `false` in your environment config.
