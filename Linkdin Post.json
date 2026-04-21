@@ -6,15 +6,14 @@
       "type": "n8n-nodes-base.manualTrigger",
       "typeVersion": 1,
       "position": [
-        -416,
-        0
+        192,
+        -128
       ],
-      "id": "ed0a6cdc-a07e-4bfa-9e89-2d485560095c",
+      "id": "6447e8ff-3701-43d5-9356-368f9cc1685e",
       "name": "When clicking ‘Execute workflow’"
     },
     {
       "parameters": {
-        "authentication": "serviceAccount",
         "documentId": {
           "__rl": true,
           "value": "1lQ-LbrG_5gj5XVDMmpxLW_lwlkXvElo5tmp9ZGjJI5U",
@@ -42,14 +41,14 @@
       "type": "n8n-nodes-base.googleSheets",
       "typeVersion": 4.7,
       "position": [
-        -208,
-        0
+        448,
+        -272
       ],
-      "id": "3a63615c-cb76-4bb1-8a37-2331c34bdc79",
+      "id": "2e7f4db4-c3a5-4f3b-bbd6-16ba2cdcbb3f",
       "name": "Get Staus To Create",
       "credentials": {
-        "googleApi": {
-          "id": "U8TnYqF6m4fk9vFP",
+        "googleSheetsOAuth2Api": {
+          "id": "rRVqzLgnZlB6M1OC",
           "name": "Google Sheets account"
         }
       }
@@ -65,24 +64,213 @@
       "type": "@n8n/n8n-nodes-langchain.agent",
       "typeVersion": 3.1,
       "position": [
-        0,
-        0
+        432,
+        -48
       ],
-      "id": "b4bc7093-6841-4934-9c3e-8d090d90e032",
+      "id": "643608c2-59a1-48b8-8f42-2a5a1708f252",
       "name": "LInkin post generation"
+    },
+    {
+      "parameters": {
+        "query": "={{ $json.Subject }}",
+        "options": {}
+      },
+      "type": "@tavily/n8n-nodes-tavily.tavilyTool",
+      "typeVersion": 1,
+      "position": [
+        384,
+        256
+      ],
+      "id": "549631aa-3178-4722-aa0d-0b3c43243a91",
+      "name": "Search in Tavily",
+      "credentials": {
+        "tavilyApi": {
+          "id": "oFucc6vuFME1oV15",
+          "name": "Tavily account"
+        }
+      }
     },
     {
       "parameters": {
         "options": {}
       },
-      "type": "n8n-nodes-base.httpRequestTool",
-      "typeVersion": 4.4,
+      "type": "@n8n/n8n-nodes-langchain.lmChatGoogleGemini",
+      "typeVersion": 1,
       "position": [
-        144,
-        256
+        240,
+        112
       ],
-      "id": "ae2c4a5d-697a-4b91-bc8e-2674c3e938bd",
-      "name": "HTTP Request"
+      "id": "3691fe6c-1e08-4fff-ac7b-2bc978e026ff",
+      "name": "Google Gemini Chat Model",
+      "credentials": {
+        "googlePalmApi": {
+          "id": "SjneyUHJziPLSRwm",
+          "name": "Google Gemini(PaLM) Api account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "update",
+        "documentId": {
+          "__rl": true,
+          "value": "1lQ-LbrG_5gj5XVDMmpxLW_lwlkXvElo5tmp9ZGjJI5U",
+          "mode": "list",
+          "cachedResultName": "imageGeneration",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1lQ-LbrG_5gj5XVDMmpxLW_lwlkXvElo5tmp9ZGjJI5U/edit?usp=drivesdk"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": "gid=0",
+          "mode": "list",
+          "cachedResultName": "Sheet1",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1lQ-LbrG_5gj5XVDMmpxLW_lwlkXvElo5tmp9ZGjJI5U/edit#gid=0"
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "Subject": "={{ $('Get Staus To Create').item.json.Subject }}",
+            "Post Status": "Created",
+            "Post Generated": "={{ $json.output }}"
+          },
+          "matchingColumns": [
+            "Subject"
+          ],
+          "schema": [
+            {
+              "id": "Subject",
+              "displayName": "Subject",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "Post Status",
+              "displayName": "Post Status",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Audience",
+              "displayName": "Audience",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "Post Generated",
+              "displayName": "Post Generated",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Image Linkedin Post Status",
+              "displayName": "Image Linkedin Post Status",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "row_number",
+              "displayName": "row_number",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "number",
+              "canBeUsedToMatch": true,
+              "readOnly": true,
+              "removed": true
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.7,
+      "position": [
+        848,
+        -128
+      ],
+      "id": "3a2996f4-1f2a-460c-a6c8-6fa4b74e734f",
+      "name": "Update row in sheet",
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "rRVqzLgnZlB6M1OC",
+          "name": "Google Sheets account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatGoogleGemini",
+      "typeVersion": 1,
+      "position": [
+        656,
+        320
+      ],
+      "id": "c97a0444-cde0-4224-9055-7bc6c4cde8a8",
+      "name": "Google Gemini Chat Model1",
+      "credentials": {
+        "googlePalmApi": {
+          "id": "SjneyUHJziPLSRwm",
+          "name": "Google Gemini(PaLM) Api account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "promptType": "define",
+        "text": "=LinkdIn Post : {{ $('LInkin post generation').item.json.output }}",
+        "options": {
+          "systemMessage": "# Overview\nYou are an AI agent that transforms LinkedIn posts into visual prompt descriptions for generating graphic marketing materials. These visuals are designed to be paired with the post on LinkedIn, helping communicate the message in a visually engaging, brand-aligned way.\n\n## Objective\nYour task is to:\n- Read and analyze the given LinkedIn post\n- Identify the main message, insight, or takeaway\n- Create a clear and compelling image generation prompt\n\n## Requirements\nThe generated visual must:\n1) Visually support or illustrate the key idea of the post  \n2) Be suitable for a professional LinkedIn feed  \n3) Feel polished, modern, and engaging  \n4) Be a marketing-style graphic (NOT a literal scene or hyperrealistic photo)\n\n## Style Guidelines\nThink like a brand designer or marketing creative.\n\n- Visuals may include: text, charts, icons, abstract shapes, overlays, modern illustrations, motion-like effects, bold typography elements (described, not rendered), or metaphorical concepts  \n- You may include layout suggestions (e.g., \"split screen design\", \"header with bold title and subtle background illustration\")  \n- Use a clean, modern, and professional aesthetic  \n- Assume the output will be used in AI image generation tools, so be descriptive and precise  \n- Include numeric stats if they exist in the original post  \n\n## Output Instructions\n- Output ONLY the final image prompt  \n- Do NOT include quotation marks  \n- Do NOT repeat or rephrase the LinkedIn post  \n- Do NOT add explanations or extra content  \n- Do NOT leave placeholders like \"text here\" or \"header area\"  \n\n## Example Output\nA modern flat-style graphic showing a human brain connected to mechanical gears, representing the fusion of AI and automation, minimalist background with soft gradients, clean composition, subtle tech-inspired elements, professional LinkedIn aesthetic"
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "typeVersion": 3.1,
+      "position": [
+        912,
+        96
+      ],
+      "id": "06191e5c-e416-4d88-aee2-f47c474e63aa",
+      "name": "image Prompt Generation"
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "type": "@tavily/n8n-nodes-tavily.tavilyTool",
+      "typeVersion": 1,
+      "position": [
+        848,
+        320
+      ],
+      "id": "99c1f483-637b-4c4d-bf36-3cc21d82cd17",
+      "name": "Search in Tavily1",
+      "credentials": {
+        "tavilyApi": {
+          "id": "oFucc6vuFME1oV15",
+          "name": "Tavily account"
+        }
+      }
     }
   ],
   "pinData": {},
@@ -109,11 +297,66 @@
         ]
       ]
     },
-    "HTTP Request": {
+    "Search in Tavily": {
       "ai_tool": [
         [
           {
             "node": "LInkin post generation",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Google Gemini Chat Model": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "LInkin post generation",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "LInkin post generation": {
+      "main": [
+        [
+          {
+            "node": "Update row in sheet",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Update row in sheet": {
+      "main": [
+        [
+          {
+            "node": "image Prompt Generation",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Google Gemini Chat Model1": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "image Prompt Generation",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Search in Tavily1": {
+      "ai_tool": [
+        [
+          {
+            "node": "image Prompt Generation",
             "type": "ai_tool",
             "index": 0
           }
@@ -124,14 +367,13 @@
   "active": false,
   "settings": {
     "executionOrder": "v1",
-    "binaryMode": "separate",
-    "availableInMCP": false
+    "binaryMode": "separate"
   },
-  "versionId": "3c034455-724d-42f3-b4b8-51b8bf2e7fea",
+  "versionId": "48d094b1-62e0-484e-8d72-2750e7996de1",
   "meta": {
     "templateCredsSetupCompleted": true,
-    "instanceId": "d18f9a118c484c60eb77c3ff16d5a2ac0623b8773cdf0ce31c7a0431b4f32afb"
+    "instanceId": "781f542c85297baff2393254780b5f228d9e0479737828ca2c79b01cf56630d7"
   },
-  "id": "Hl2b8F3RnNKQAmGc",
+  "id": "zGd5nAZd3C4lPewD",
   "tags": []
 }
