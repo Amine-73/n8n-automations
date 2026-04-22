@@ -6,7 +6,7 @@
       "type": "n8n-nodes-base.manualTrigger",
       "typeVersion": 1,
       "position": [
-        192,
+        -32,
         -128
       ],
       "id": "6447e8ff-3701-43d5-9356-368f9cc1685e",
@@ -41,8 +41,8 @@
       "type": "n8n-nodes-base.googleSheets",
       "typeVersion": 4.7,
       "position": [
-        448,
-        -272
+        208,
+        -240
       ],
       "id": "2e7f4db4-c3a5-4f3b-bbd6-16ba2cdcbb3f",
       "name": "Get Staus To Create",
@@ -64,7 +64,7 @@
       "type": "@n8n/n8n-nodes-langchain.agent",
       "typeVersion": 3.1,
       "position": [
-        432,
+        304,
         -48
       ],
       "id": "643608c2-59a1-48b8-8f42-2a5a1708f252",
@@ -78,7 +78,7 @@
       "type": "@tavily/n8n-nodes-tavily.tavilyTool",
       "typeVersion": 1,
       "position": [
-        384,
+        256,
         256
       ],
       "id": "549631aa-3178-4722-aa0d-0b3c43243a91",
@@ -97,8 +97,8 @@
       "type": "@n8n/n8n-nodes-langchain.lmChatGoogleGemini",
       "typeVersion": 1,
       "position": [
-        240,
-        112
+        80,
+        192
       ],
       "id": "3691fe6c-1e08-4fff-ac7b-2bc978e026ff",
       "name": "Google Gemini Chat Model",
@@ -205,8 +205,8 @@
       "type": "n8n-nodes-base.googleSheets",
       "typeVersion": 4.7,
       "position": [
-        848,
-        -128
+        736,
+        -176
       ],
       "id": "3a2996f4-1f2a-460c-a6c8-6fa4b74e734f",
       "name": "Update row in sheet",
@@ -224,8 +224,8 @@
       "type": "@n8n/n8n-nodes-langchain.lmChatGoogleGemini",
       "typeVersion": 1,
       "position": [
-        656,
-        320
+        592,
+        352
       ],
       "id": "c97a0444-cde0-4224-9055-7bc6c4cde8a8",
       "name": "Google Gemini Chat Model1",
@@ -247,23 +247,146 @@
       "type": "@n8n/n8n-nodes-langchain.agent",
       "typeVersion": 3.1,
       "position": [
-        912,
-        96
+        640,
+        112
       ],
       "id": "06191e5c-e416-4d88-aee2-f47c474e63aa",
       "name": "image Prompt Generation"
     },
     {
       "parameters": {
+        "url": "=https://image.pollinations.ai/prompt/{{ $json.output }}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.4,
+      "position": [
+        1168,
+        112
+      ],
+      "id": "6c5431c2-eed5-4031-9220-1d4760db1772",
+      "name": "HTTP Request"
+    },
+    {
+      "parameters": {
+        "operation": "update",
+        "documentId": {
+          "__rl": true,
+          "value": "1lQ-LbrG_5gj5XVDMmpxLW_lwlkXvElo5tmp9ZGjJI5U",
+          "mode": "list",
+          "cachedResultName": "imageGeneration",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1lQ-LbrG_5gj5XVDMmpxLW_lwlkXvElo5tmp9ZGjJI5U/edit?usp=drivesdk"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": "gid=0",
+          "mode": "list",
+          "cachedResultName": "Sheet1",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1lQ-LbrG_5gj5XVDMmpxLW_lwlkXvElo5tmp9ZGjJI5U/edit#gid=0"
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "Subject": "={{ $('Get Staus To Create').item.json.Subject }}",
+            "Image Linkedin Post Status": "Generated"
+          },
+          "matchingColumns": [
+            "Subject"
+          ],
+          "schema": [
+            {
+              "id": "Subject",
+              "displayName": "Subject",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "Post Status",
+              "displayName": "Post Status",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "Audience",
+              "displayName": "Audience",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "Post Generated",
+              "displayName": "Post Generated",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "Image Linkedin Post Status",
+              "displayName": "Image Linkedin Post Status",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "row_number",
+              "displayName": "row_number",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "number",
+              "canBeUsedToMatch": true,
+              "readOnly": true,
+              "removed": true
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.7,
+      "position": [
+        1376,
+        112
+      ],
+      "id": "720ce28d-2364-44dd-8e9f-3412a865be46",
+      "name": "Update row in sheet1",
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "rRVqzLgnZlB6M1OC",
+          "name": "Google Sheets account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "query": "={{ $('LInkin post generation').item.json.output }}",
         "options": {}
       },
       "type": "@tavily/n8n-nodes-tavily.tavilyTool",
       "typeVersion": 1,
       "position": [
-        848,
-        320
+        768,
+        352
       ],
-      "id": "99c1f483-637b-4c4d-bf36-3cc21d82cd17",
+      "id": "c52ae461-2094-4900-b81a-c6b1b6f62a21",
       "name": "Search in Tavily1",
       "credentials": {
         "tavilyApi": {
@@ -352,6 +475,28 @@
         ]
       ]
     },
+    "image Prompt Generation": {
+      "main": [
+        [
+          {
+            "node": "HTTP Request",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "HTTP Request": {
+      "main": [
+        [
+          {
+            "node": "Update row in sheet1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
     "Search in Tavily1": {
       "ai_tool": [
         [
@@ -369,7 +514,7 @@
     "executionOrder": "v1",
     "binaryMode": "separate"
   },
-  "versionId": "48d094b1-62e0-484e-8d72-2750e7996de1",
+  "versionId": "3a26954e-0b34-4c56-b25f-a899f82a8170",
   "meta": {
     "templateCredsSetupCompleted": true,
     "instanceId": "781f542c85297baff2393254780b5f228d9e0479737828ca2c79b01cf56630d7"
