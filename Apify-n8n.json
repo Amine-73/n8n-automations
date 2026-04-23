@@ -1,0 +1,246 @@
+{
+  "name": "Apify-n8n",
+  "nodes": [
+    {
+      "parameters": {},
+      "type": "n8n-nodes-base.manualTrigger",
+      "typeVersion": 1,
+      "position": [
+        -560,
+        -96
+      ],
+      "id": "1be37cf3-a5d4-4a70-8f43-b3a235595582",
+      "name": "When clicking ‘Execute workflow’"
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://api.apify.com/v2/acts/apify~instagram-hashtag-scraper/runs?token=apify_api_hf6yhovy1cXKmYhkBtcGindqcHhT742ERj5C",
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "{\n    \"hashtags\": [\n        \"mondial\"\n    ],\n    \"keywordSearch\": false,\n    \"resultsLimit\": 1,\n    \"resultsType\": \"posts\"\n}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.4,
+      "position": [
+        -416,
+        112
+      ],
+      "id": "1a122028-4592-4ea3-a34f-d391e13fe969",
+      "name": "Run Actor #"
+    },
+    {
+      "parameters": {
+        "url": "https://api.apify.com/v2/acts/apify~instagram-hashtag-scraper/runs/last/dataset/items?token=apify_api_hf6yhovy1cXKmYhkBtcGindqcHhT742ERj5C",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.4,
+      "position": [
+        32,
+        -16
+      ],
+      "id": "afc99811-5b18-4e2a-8525-65c69f7e0504",
+      "name": "Get Data #"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "c5a4451d-eee6-4ba8-9b05-066a2750f356",
+              "name": "id",
+              "value": "={{ $json.id }}",
+              "type": "string"
+            },
+            {
+              "id": "15aa1a99-2d23-4d90-85fe-03619d4360eb",
+              "name": "hashtags",
+              "value": "={{ $json.hashtags }}",
+              "type": "array"
+            },
+            {
+              "id": "1c7aa7c5-45f0-4e19-91dc-a9e2bc906e0b",
+              "name": "url",
+              "value": "={{ $json.url }}",
+              "type": "string"
+            },
+            {
+              "id": "bdcb0cdf-37c5-448c-8b1a-29d9737287d4",
+              "name": "commentsCount",
+              "value": "={{ $json.commentsCount }}",
+              "type": "number"
+            },
+            {
+              "id": "50be8491-e496-40f0-8717-98c99809a575",
+              "name": "firstComment",
+              "value": "={{ $json.firstComment }}",
+              "type": "string"
+            },
+            {
+              "id": "652d8c6a-9eaf-4688-91ef-40c458ebcad6",
+              "name": "latestComments",
+              "value": "={{ $json.latestComments }}",
+              "type": "array"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        320,
+        192
+      ],
+      "id": "90be4e50-1b88-4a87-92ca-1f0ecf64c307",
+      "name": "Edit Fields"
+    },
+    {
+      "parameters": {
+        "operation": "appendOrUpdate",
+        "documentId": {
+          "__rl": true,
+          "mode": "list",
+          "value": ""
+        },
+        "sheetName": {
+          "__rl": true,
+          "mode": "list",
+          "value": ""
+        }
+      },
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.7,
+      "position": [
+        448,
+        -48
+      ],
+      "id": "845fcb9f-005c-4017-95f0-6a44774ce9a5",
+      "name": "Append or update row in sheet",
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "rRVqzLgnZlB6M1OC",
+          "name": "Google Sheets account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "amount": 10
+      },
+      "type": "n8n-nodes-base.wait",
+      "typeVersion": 1.1,
+      "position": [
+        -208,
+        112
+      ],
+      "id": "03e80dfd-949f-4806-8d9f-46062d6e3bb4",
+      "name": "Wait",
+      "webhookId": "19e27544-2372-40e3-9e13-ab75252ecf49"
+    }
+  ],
+  "pinData": {
+    "Get Data #": [
+      {
+        "json": {
+          "inputUrl": "https://www.instagram.com/explore/tags/mondial",
+          "id": "3881943408302754840",
+          "type": "Image",
+          "shortCode": "DXfbvZiDgwY",
+          "caption": "",
+          "hashtags": [],
+          "mentions": [],
+          "url": "https://www.instagram.com/p/DXfbvZiDgwY/",
+          "commentsCount": 0,
+          "firstComment": "",
+          "latestComments": [],
+          "dimensionsHeight": 1080,
+          "dimensionsWidth": 1080,
+          "displayUrl": "https://scontent-vie1-1.cdninstagram.com/v/t51.82787-15/671882460_18130086619564768_2048725862919476269_n.jpg?stp=dst-jpg_e35_tt6&_nc_cat=111&ig_cache_key=Mzg4MTk0MzQwODMwMjc1NDg0MA%3D%3D.3-ccb7-5&ccb=7-5&_nc_sid=58cdad&efg=eyJ2ZW5jb2RlX3RhZyI6InhwaWRzLjEwODB4MTA4MC5zZHIuQzMifQ%3D%3D&_nc_ohc=PkAos6hI8PcQ7kNvwHSbZeK&_nc_oc=AdpbmkHLm6KLDMKle5HiPWd_VcaKg2hfI5wXiIZ1baIm4aeWu8aSs2LljtnyTsQZUxw&_nc_ad=z-m&_nc_cid=0&_nc_zt=23&se=7&_nc_ht=scontent-vie1-1.cdninstagram.com&_nc_gid=XqhydigrgRVvudcoEZvdzQ&_nc_ss=7a3ba&oh=00_Af3_BE_P6XCVaoNVys9qzVvxEjegKLNPtuR6bbuJpu0YBw&oe=69F07C4C",
+          "images": [],
+          "timestamp": "2026-04-23T22:36:45.000Z",
+          "childPosts": [],
+          "ownerFullName": "Magazine Luiza",
+          "ownerUsername": "magalu_aterrado",
+          "ownerId": "16976140767",
+          "productType": "carousel_item",
+          "musicInfo": null
+        },
+        "pairedItem": {
+          "item": 0
+        }
+      }
+    ]
+  },
+  "connections": {
+    "When clicking ‘Execute workflow’": {
+      "main": [
+        [
+          {
+            "node": "Run Actor #",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Run Actor #": {
+      "main": [
+        [
+          {
+            "node": "Wait",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Get Data #": {
+      "main": [
+        [
+          {
+            "node": "Edit Fields",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Edit Fields": {
+      "main": [
+        [
+          {
+            "node": "Append or update row in sheet",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Wait": {
+      "main": [
+        [
+          {
+            "node": "Get Data #",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1",
+    "binaryMode": "separate"
+  },
+  "versionId": "e8e5f2dd-ffc0-4aea-9026-17020298ebc9",
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": "781f542c85297baff2393254780b5f228d9e0479737828ca2c79b01cf56630d7"
+  },
+  "id": "H4HY9wmMpbcvvRWV",
+  "tags": []
+}
