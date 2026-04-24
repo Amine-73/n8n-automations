@@ -15,7 +15,7 @@
     {
       "parameters": {
         "method": "POST",
-        "url": "https://api.apify.com/v2/acts/apify~instagram-hashtag-scraper/runs?token=apify_api_YOUR_API_KEY",
+        "url": "https://api.apify.com/v2/acts/apify~instagram-hashtag-scraper/runs?token=YOUR_API_KEY",
         "sendBody": true,
         "specifyBody": "json",
         "jsonBody": "{\n    \"hashtags\": [\n        \"mondial\"\n    ],\n    \"keywordSearch\": false,\n    \"resultsLimit\": 1,\n    \"resultsType\": \"posts\"\n}",
@@ -32,7 +32,7 @@
     },
     {
       "parameters": {
-        "url": "https://api.apify.com/v2/acts/apify~instagram-hashtag-scraper/runs/last/dataset/items?token=apify_api_YOUR_API_KEY",
+        "url": "https://api.apify.com/v2/acts/apify~instagram-hashtag-scraper/runs/last/dataset/items?token=YOUR_API_KEY",
         "options": {}
       },
       "type": "n8n-nodes-base.httpRequest",
