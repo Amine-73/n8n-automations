@@ -15,7 +15,7 @@
     {
       "parameters": {
         "method": "POST",
-        "url": "https://api.apify.com/v2/acts/apify~instagram-hashtag-scraper/runs?token=apify_api_hf6yhovy1cXKmYhkBtcGindqcHhT742ERj5C",
+        "url": "https://api.apify.com/v2/acts/apify~instagram-hashtag-scraper/runs?token=apify_api_YOUR_API_KEY",
         "sendBody": true,
         "specifyBody": "json",
         "jsonBody": "{\n    \"hashtags\": [\n        \"mondial\"\n    ],\n    \"keywordSearch\": false,\n    \"resultsLimit\": 1,\n    \"resultsType\": \"posts\"\n}",
@@ -32,7 +32,7 @@
     },
     {
       "parameters": {
-        "url": "https://api.apify.com/v2/acts/apify~instagram-hashtag-scraper/runs/last/dataset/items?token=apify_api_hf6yhovy1cXKmYhkBtcGindqcHhT742ERj5C",
+        "url": "https://api.apify.com/v2/acts/apify~instagram-hashtag-scraper/runs/last/dataset/items?token=apify_api_YOUR_API_KEY",
         "options": {}
       },
       "type": "n8n-nodes-base.httpRequest",
@@ -91,8 +91,8 @@
       "type": "n8n-nodes-base.set",
       "typeVersion": 3.4,
       "position": [
-        320,
-        192
+        240,
+        144
       ],
       "id": "90be4e50-1b88-4a87-92ca-1f0ecf64c307",
       "name": "Edit Fields"
@@ -236,7 +236,7 @@
     "executionOrder": "v1",
     "binaryMode": "separate"
   },
-  "versionId": "e8e5f2dd-ffc0-4aea-9026-17020298ebc9",
+  "versionId": "39c326dc-e9d5-42a7-8e41-ae2b95804d21",
   "meta": {
     "templateCredsSetupCompleted": true,
     "instanceId": "781f542c85297baff2393254780b5f228d9e0479737828ca2c79b01cf56630d7"
