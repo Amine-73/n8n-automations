@@ -15,7 +15,7 @@
     {
       "parameters": {
         "method": "POST",
-        "url": "https://api.apify.com/v2/acts/apify~instagram-hashtag-scraper/runs?token='!! YOUR _ API _ KEY'",
+        "url": "!! YOUR _ API _ KEY URL ",
         "sendBody": true,
         "specifyBody": "json",
         "jsonBody": "{\n    \"hashtags\": [\n        \"mondial\"\n    ],\n    \"keywordSearch\": false,\n    \"resultsLimit\": 1,\n    \"resultsType\": \"posts\"\n}",
@@ -32,7 +32,7 @@
     },
     {
       "parameters": {
-        "url": "https://api.apify.com/v2/acts/apify~instagram-hashtag-scraper/runs/last/dataset/items?token=' !! YOUR _ API _ KEY ' ",
+        "url": "!! YOUR _ API _ KEY URL",
         "options": {}
       },
       "type": "n8n-nodes-base.httpRequest",
@@ -121,7 +121,7 @@
       "name": "Append or update row in sheet",
       "credentials": {
         "googleSheetsOAuth2Api": {
-          "id": "rRVqzLgnZlB6M1OC",
+          "id": "n8n reference ID",
           "name": "Google Sheets account"
         }
       }
