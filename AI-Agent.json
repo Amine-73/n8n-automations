@@ -8,8 +8,8 @@
       "type": "@n8n/n8n-nodes-langchain.chatTrigger",
       "typeVersion": 1.4,
       "position": [
-        -432,
-        -64
+        -688,
+        -336
       ],
       "id": "1b032434-260d-47a6-af3a-9a66cb019d27",
       "name": "When chat message received",
@@ -18,7 +18,7 @@
     {
       "parameters": {
         "options": {
-          "systemMessage": "You are an AI agent responsible for working with Google Sheets data, sending emails, and creating calendar events.\n\nYou operate in three modes: READ MODE, EMAIL MODE, and CALENDAR MODE.\n\n----------------------\n1. READ MODE (default)\n----------------------\n- Always start in READ MODE.\n- In this mode, you can:\n  • Retrieve data using \"Get Database Sheet\"\n  • Answer user questions about the data (username, email, etc.)\n- DO NOT send emails or create calendar events in this mode.\n\n----------------------\n2. EMAIL MODE (only when user explicitly asks)\n----------------------\n- Activate only if the user clearly says:\n  \"send email\", \"send it\", \"go ahead and send\", etc.\n\nSteps:\n1. Retrieve data using \"Get Database Sheet\"\n   - If it fails, stop and report the error.\n\n2. Generate a professional, clear, well-structured email using the data.\n\n3. Use Gmail \"Send Email\" to send it.\n\n4. After success, reply:\n   \"Your email has been sent successfully.\"\n\n----------------------\n3. CALENDAR MODE (only when user explicitly asks)\n----------------------\n- Activate only if the user clearly says:\n  \"create an event\", \"schedule a meeting\", \"add to calendar\", etc.\n\nSteps:\n1. Retrieve data (if needed) using \"Get Database Sheet\".\n\n2. Automatically extract event details from:\n   - User message\n   - Retrieved data (if relevant)\n\n3. Required fields:\n   - Title\n   - Date\n   - Time\n\n4. If ALL required fields are available:\n   - Use \"Create an Event\" directly.\n\n5. If ANY required field is missing:\n   - Ask the user only for the missing information.\n   - Do NOT guess critical details like date or time.\n\n6. After successful creation, reply:\n   \"Your event has been created successfully.\"\n\n----------------------\nIMPORTANT RULES\n----------------------\n- Default = READ MODE.\n- Never send emails or create events unless explicitly requested.\n- Always follow steps in order.\n- Do not skip steps.\n- If any step fails, stop and explain the error.\n- When generating emails, ensure high-quality, professional writing."
+          "systemMessage": "=You are an AI agent responsible for working with Google Sheets data, sending emails, and creating calendar events.\n\nYou operate in three modes: READ MODE, EMAIL MODE, and CALENDAR MODE.\n\n----------------------\n1. READ MODE (default)\n----------------------\n- Always start in READ MODE.\n- In this mode, you can:\n  • Retrieve data using \"Get Database Sheet\"\n  • Answer user questions about the data (username, email, etc.)\n- DO NOT send emails or create calendar events in this mode.\n\n----------------------\n2. EMAIL MODE (only when user explicitly asks)\n----------------------\n- Activate only if the user clearly says:\n  \"send email\", \"send it\", \"go ahead and send\", etc.\n\nSteps:\n1. Retrieve data using \"Get Database Sheet\"\n   - If it fails, stop and report the error.\n\n2. Generate a professional, clear, well-structured email using the data.\n\n3. Use Gmail \"Send Email\" to send it.\n\n4. After success, reply:\n   \"Your email has been sent successfully.\"\n\n----------------------\n3. CALENDAR MODE (only when user explicitly asks)\n----------------------\n- Activate only if the user clearly says:\n  \"create an event\", \"schedule a meeting\", \"add to calendar\", etc.\n\nSteps:\n1. Retrieve data (if needed) using \"Get Database Sheet\".\n\n2. Automatically extract event details from:\n   - User message\n   - Retrieved data (if relevant)\n\n3. Required fields:\n   - Title\n   - Date\n   - Time\n\n4. If ALL required fields are available:\n   - Use \"Create an Event\" directly.\n\n5. If ANY required field is missing:\n   - Ask the user only for the missing information.\n   - Do NOT guess critical details like date or time.\n\n6. After successful creation, reply:\n   \"Your event has been created successfully.\"\n\n----------------------\nIMPORTANT RULES\n----------------------\n- Default = READ MODE.\n- Never send emails or create events unless explicitly requested.\n- Always follow steps in order.\n- Do not skip steps.\n- If any step fails, stop and explain the error.\n- When generating emails, ensure high-quality, professional writing.\n----------------------\nREMINDER\n----------------------\n-the current time is :{{ $now }}"
         }
       },
       "type": "@n8n/n8n-nodes-langchain.agent",
@@ -32,13 +32,14 @@
     },
     {
       "parameters": {
+        "modelName": "models/gemini-2.5-computer-use-preview-10-2025",
         "options": {}
       },
       "type": "@n8n/n8n-nodes-langchain.lmChatGoogleGemini",
       "typeVersion": 1,
       "position": [
-        -288,
-        80
+        -384,
+        -512
       ],
       "id": "bf8eb612-182d-4c33-ae59-82ca590c8010",
       "name": "Google Gemini Chat Model",
@@ -56,8 +57,8 @@
       "type": "@n8n/n8n-nodes-langchain.memoryBufferWindow",
       "typeVersion": 1.3,
       "position": [
-        -128,
-        112
+        -576,
+        -512
       ],
       "id": "a1d4a8ee-70bc-497e-8cbd-436b70cd8991",
       "name": "Simple Memory"
@@ -83,8 +84,8 @@
       "type": "@n8n/n8n-nodes-langchain.googleGeminiTool",
       "typeVersion": 1.1,
       "position": [
-        288,
-        304
+        576,
+        80
       ],
       "id": "8589fd78-bae6-4bfa-94aa-fdc024e2a2ae",
       "name": "Message a model in Google Gemini",
@@ -105,8 +106,8 @@
       "type": "n8n-nodes-base.gmailHitlTool",
       "typeVersion": 2.2,
       "position": [
-        80,
-        144
+        272,
+        -96
       ],
       "id": "6f10c376-a651-4002-951a-74cc6da4deae",
       "name": "Send Email",
@@ -141,8 +142,8 @@
       "type": "n8n-nodes-base.googleSheetsTool",
       "typeVersion": 4.7,
       "position": [
-        -16,
-        192
+        -64,
+        -112
       ],
       "id": "b45ffead-c60f-4d13-a311-0b93950b35df",
       "name": "Get Database sheet",
@@ -155,6 +156,8 @@
     },
     {
       "parameters": {
+        "descriptionType": "manual",
+        "toolDescription": "Create an event in Google Calendar",
         "calendar": {
           "__rl": true,
           "value": "aminchana.business@gmail.com",
@@ -164,14 +167,15 @@
         "start": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('Start', ``, 'string') }}",
         "end": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('End', ``, 'string') }}",
         "additionalFields": {
+          "description": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('Description', ``, 'string') }}",
           "summary": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('Summary', ``, 'string') }}"
         }
       },
       "type": "n8n-nodes-base.googleCalendarTool",
       "typeVersion": 1.3,
       "position": [
-        384,
-        112
+        720,
+        -176
       ],
       "id": "0bd55de9-2c66-41b8-ad29-2978f89fd019",
       "name": "Create an event",
@@ -181,6 +185,37 @@
           "name": "Google Calendar account"
         }
       }
+    },
+    {
+      "parameters": {
+        "model": "llama-3.3-70b-versatile",
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatGroq",
+      "typeVersion": 1,
+      "position": [
+        -512,
+        -176
+      ],
+      "id": "699d9f40-0583-4f40-991b-7a8f3955ebe5",
+      "name": "Groq Chat Model",
+      "credentials": {
+        "groqApi": {
+          "id": "nZM2bLMBkNrYBi0N",
+          "name": "Groq account"
+        }
+      }
+    },
+    {
+      "parameters": {},
+      "type": "@n8n/n8n-nodes-langchain.memoryPostgresChat",
+      "typeVersion": 1.3,
+      "position": [
+        -288,
+        -112
+      ],
+      "id": "38530665-0fa0-4f43-941d-7523bb80e531",
+      "name": "Postgres Chat Memory"
     }
   ],
   "pinData": {},
@@ -198,24 +233,12 @@
     },
     "Google Gemini Chat Model": {
       "ai_languageModel": [
-        [
-          {
-            "node": "AI Agent",
-            "type": "ai_languageModel",
-            "index": 0
-          }
-        ]
+        []
       ]
     },
     "Simple Memory": {
       "ai_memory": [
-        [
-          {
-            "node": "AI Agent",
-            "type": "ai_memory",
-            "index": 0
-          }
-        ]
+        []
       ]
     },
     "Message a model in Google Gemini": {
@@ -261,6 +284,28 @@
           }
         ]
       ]
+    },
+    "Groq Chat Model": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Postgres Chat Memory": {
+      "ai_memory": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_memory",
+            "index": 0
+          }
+        ]
+      ]
     }
   },
   "active": false,
@@ -268,7 +313,7 @@
     "executionOrder": "v1",
     "binaryMode": "separate"
   },
-  "versionId": "036bf993-c5c0-443f-9b53-57f3951202a2",
+  "versionId": "ebf1c54c-2926-4156-92fa-bfb4bf22b6c9",
   "meta": {
     "templateCredsSetupCompleted": true,
     "instanceId": "781f542c85297baff2393254780b5f228d9e0479737828ca2c79b01cf56630d7"
