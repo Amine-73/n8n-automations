@@ -8,8 +8,8 @@
       "type": "@n8n/n8n-nodes-langchain.chatTrigger",
       "typeVersion": 1.4,
       "position": [
-        -688,
-        -336
+        -336,
+        -368
       ],
       "id": "1b032434-260d-47a6-af3a-9a66cb019d27",
       "name": "When chat message received",
@@ -24,44 +24,11 @@
       "type": "@n8n/n8n-nodes-langchain.agent",
       "typeVersion": 3.1,
       "position": [
-        -64,
-        -336
+        -16,
+        -672
       ],
       "id": "491bdf16-9b5c-441a-abb5-d2512756ad71",
       "name": "AI Agent"
-    },
-    {
-      "parameters": {
-        "modelName": "models/gemini-2.5-computer-use-preview-10-2025",
-        "options": {}
-      },
-      "type": "@n8n/n8n-nodes-langchain.lmChatGoogleGemini",
-      "typeVersion": 1,
-      "position": [
-        -384,
-        -512
-      ],
-      "id": "bf8eb612-182d-4c33-ae59-82ca590c8010",
-      "name": "Google Gemini Chat Model",
-      "credentials": {
-        "googlePalmApi": {
-          "id": "SjneyUHJziPLSRwm",
-          "name": "Google Gemini(PaLM) Api account"
-        }
-      }
-    },
-    {
-      "parameters": {
-        "contextWindowLength": 10
-      },
-      "type": "@n8n/n8n-nodes-langchain.memoryBufferWindow",
-      "typeVersion": 1.3,
-      "position": [
-        -576,
-        -512
-      ],
-      "id": "a1d4a8ee-70bc-497e-8cbd-436b70cd8991",
-      "name": "Simple Memory"
     },
     {
       "parameters": {
@@ -84,8 +51,8 @@
       "type": "@n8n/n8n-nodes-langchain.googleGeminiTool",
       "typeVersion": 1.1,
       "position": [
-        576,
-        80
+        640,
+        -496
       ],
       "id": "8589fd78-bae6-4bfa-94aa-fdc024e2a2ae",
       "name": "Message a model in Google Gemini",
@@ -106,8 +73,8 @@
       "type": "n8n-nodes-base.gmailHitlTool",
       "typeVersion": 2.2,
       "position": [
-        272,
-        -96
+        512,
+        -640
       ],
       "id": "6f10c376-a651-4002-951a-74cc6da4deae",
       "name": "Send Email",
@@ -142,8 +109,8 @@
       "type": "n8n-nodes-base.googleSheetsTool",
       "typeVersion": 4.7,
       "position": [
-        -64,
-        -112
+        384,
+        -672
       ],
       "id": "b45ffead-c60f-4d13-a311-0b93950b35df",
       "name": "Get Database sheet",
@@ -174,8 +141,8 @@
       "type": "n8n-nodes-base.googleCalendarTool",
       "typeVersion": 1.3,
       "position": [
-        720,
-        -176
+        848,
+        -656
       ],
       "id": "0bd55de9-2c66-41b8-ad29-2978f89fd019",
       "name": "Create an event",
@@ -195,7 +162,7 @@
       "typeVersion": 1,
       "position": [
         -512,
-        -176
+        -640
       ],
       "id": "699d9f40-0583-4f40-991b-7a8f3955ebe5",
       "name": "Groq Chat Model",
@@ -211,11 +178,129 @@
       "type": "@n8n/n8n-nodes-langchain.memoryPostgresChat",
       "typeVersion": 1.3,
       "position": [
-        -288,
-        -112
+        -336,
+        -560
       ],
       "id": "38530665-0fa0-4f43-941d-7523bb80e531",
-      "name": "Postgres Chat Memory"
+      "name": "Postgres Chat Memory",
+      "credentials": {
+        "postgres": {
+          "id": "EpeAZucbmT6ADGR3",
+          "name": "Postgres account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "options": {
+          "systemMessage": "You are a helpful assistant"
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "typeVersion": 3.1,
+      "position": [
+        -16,
+        -400
+      ],
+      "id": "2a03e797-c746-4586-964f-2120fe358d30",
+      "name": "AI Agent1"
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatGroq",
+      "typeVersion": 1,
+      "position": [
+        -160,
+        -208
+      ],
+      "id": "336c947a-fb38-4e57-bf6a-e7948ce8321a",
+      "name": "Groq Chat Model1",
+      "credentials": {
+        "groqApi": {
+          "id": "nZM2bLMBkNrYBi0N",
+          "name": "Groq account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "download",
+        "fileId": {
+          "__rl": true,
+          "value": "1RNCiOQB5eHZOUgKe6ZQPt6hrDTu6XqoP",
+          "mode": "list",
+          "cachedResultName": "Amine_Channa_Développeur FullStack(MERN)_CV.pdf",
+          "cachedResultUrl": "https://drive.google.com/file/d/1RNCiOQB5eHZOUgKe6ZQPt6hrDTu6XqoP/view?usp=drivesdk"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleDrive",
+      "typeVersion": 3,
+      "position": [
+        -448,
+        -16
+      ],
+      "id": "3782ea23-946a-46d5-a740-c3eace9fe987",
+      "name": "Download file",
+      "credentials": {
+        "googleDriveOAuth2Api": {
+          "id": "U6PRG0AvyAH0tiIk",
+          "name": "Google Drive account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "mode": "insert",
+        "tableName": {
+          "__rl": true,
+          "mode": "list",
+          "value": ""
+        },
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.vectorStoreSupabase",
+      "typeVersion": 1.3,
+      "position": [
+        -64,
+        0
+      ],
+      "id": "86d63512-f9a4-45e6-bf1c-02046041deb3",
+      "name": "Supabase Vector Store",
+      "credentials": {
+        "supabaseApi": {
+          "id": "k4EKO4Y8BkooLlhD",
+          "name": "Supabase account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "mode": "retrieve-as-tool",
+        "tableName": {
+          "__rl": true,
+          "value": "documents",
+          "mode": "list",
+          "cachedResultName": "documents"
+        },
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.vectorStoreSupabase",
+      "typeVersion": 1.3,
+      "position": [
+        128,
+        -192
+      ],
+      "id": "fe4eea61-4e3b-489c-a315-fb4f8b56baf9",
+      "name": "Supabase Vector Store1",
+      "credentials": {
+        "supabaseApi": {
+          "id": "k4EKO4Y8BkooLlhD",
+          "name": "Supabase account"
+        }
+      }
     }
   ],
   "pinData": {},
@@ -224,21 +309,11 @@
       "main": [
         [
           {
-            "node": "AI Agent",
+            "node": "AI Agent1",
             "type": "main",
             "index": 0
           }
         ]
-      ]
-    },
-    "Google Gemini Chat Model": {
-      "ai_languageModel": [
-        []
-      ]
-    },
-    "Simple Memory": {
-      "ai_memory": [
-        []
       ]
     },
     "Message a model in Google Gemini": {
@@ -306,6 +381,39 @@
           }
         ]
       ]
+    },
+    "Groq Chat Model1": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "AI Agent1",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Download file": {
+      "main": [
+        [
+          {
+            "node": "Supabase Vector Store",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Supabase Vector Store1": {
+      "ai_tool": [
+        [
+          {
+            "node": "AI Agent1",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
     }
   },
   "active": false,
@@ -313,7 +421,7 @@
     "executionOrder": "v1",
     "binaryMode": "separate"
   },
-  "versionId": "ebf1c54c-2926-4156-92fa-bfb4bf22b6c9",
+  "versionId": "bc2e2b87-d65d-4be2-805a-72818c7015a3",
   "meta": {
     "templateCredsSetupCompleted": true,
     "instanceId": "781f542c85297baff2393254780b5f228d9e0479737828ca2c79b01cf56630d7"
