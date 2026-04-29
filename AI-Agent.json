@@ -207,6 +207,7 @@
     },
     {
       "parameters": {
+        "model": "openai/gpt-oss-20b",
         "options": {}
       },
       "type": "@n8n/n8n-nodes-langchain.lmChatGroq",
@@ -256,16 +257,17 @@
         "mode": "insert",
         "tableName": {
           "__rl": true,
+          "value": "documents",
           "mode": "list",
-          "value": ""
+          "cachedResultName": "documents"
         },
         "options": {}
       },
       "type": "@n8n/n8n-nodes-langchain.vectorStoreSupabase",
       "typeVersion": 1.3,
       "position": [
-        -64,
-        0
+        -144,
+        -48
       ],
       "id": "86d63512-f9a4-45e6-bf1c-02046041deb3",
       "name": "Supabase Vector Store",
@@ -279,6 +281,7 @@
     {
       "parameters": {
         "mode": "retrieve-as-tool",
+        "toolDescription": "Use this tool to retrieve data  informations",
         "tableName": {
           "__rl": true,
           "value": "documents",
@@ -290,8 +293,8 @@
       "type": "@n8n/n8n-nodes-langchain.vectorStoreSupabase",
       "typeVersion": 1.3,
       "position": [
-        128,
-        -192
+        400,
+        -304
       ],
       "id": "fe4eea61-4e3b-489c-a315-fb4f8b56baf9",
       "name": "Supabase Vector Store1",
@@ -299,6 +302,72 @@
         "supabaseApi": {
           "id": "k4EKO4Y8BkooLlhD",
           "name": "Supabase account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.embeddingsMistralCloud",
+      "typeVersion": 1,
+      "position": [
+        -256,
+        144
+      ],
+      "id": "c2d9add3-d1c4-4cf7-b496-e50f1b4ee12b",
+      "name": "Embeddings Mistral Cloud",
+      "credentials": {
+        "mistralCloudApi": {
+          "id": "5E46jvgvbEApUId5",
+          "name": "Mistral Cloud account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "dataType": "binary",
+        "textSplittingMode": "custom",
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.documentDefaultDataLoader",
+      "typeVersion": 1.1,
+      "position": [
+        256,
+        32
+      ],
+      "id": "b33d9e4f-b0dc-49fb-829e-9cfc147b8245",
+      "name": "Default Data Loader"
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.textSplitterRecursiveCharacterTextSplitter",
+      "typeVersion": 1,
+      "position": [
+        208,
+        176
+      ],
+      "id": "39645ce1-e804-42e5-8e81-fbce46f1b00a",
+      "name": "Recursive Character Text Splitter"
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.embeddingsMistralCloud",
+      "typeVersion": 1,
+      "position": [
+        208,
+        -176
+      ],
+      "id": "beeb074f-27b1-4154-98d3-ad52332893d6",
+      "name": "Embeddings Mistral Cloud1",
+      "credentials": {
+        "mistralCloudApi": {
+          "id": "5E46jvgvbEApUId5",
+          "name": "Mistral Cloud account"
         }
       }
     }
@@ -414,6 +483,50 @@
           }
         ]
       ]
+    },
+    "Embeddings Mistral Cloud": {
+      "ai_embedding": [
+        [
+          {
+            "node": "Supabase Vector Store",
+            "type": "ai_embedding",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Default Data Loader": {
+      "ai_document": [
+        [
+          {
+            "node": "Supabase Vector Store",
+            "type": "ai_document",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Recursive Character Text Splitter": {
+      "ai_textSplitter": [
+        [
+          {
+            "node": "Default Data Loader",
+            "type": "ai_textSplitter",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Embeddings Mistral Cloud1": {
+      "ai_embedding": [
+        [
+          {
+            "node": "Supabase Vector Store1",
+            "type": "ai_embedding",
+            "index": 0
+          }
+        ]
+      ]
     }
   },
   "active": false,
@@ -421,7 +534,7 @@
     "executionOrder": "v1",
     "binaryMode": "separate"
   },
-  "versionId": "bc2e2b87-d65d-4be2-805a-72818c7015a3",
+  "versionId": "7d168101-a9b8-4be7-91ba-65164683eece",
   "meta": {
     "templateCredsSetupCompleted": true,
     "instanceId": "781f542c85297baff2393254780b5f228d9e0479737828ca2c79b01cf56630d7"
