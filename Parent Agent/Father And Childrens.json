@@ -1,0 +1,148 @@
+{
+  "name": "Father And Childrens",
+  "nodes": [
+    {
+      "parameters": {
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.chatTrigger",
+      "typeVersion": 1.4,
+      "position": [
+        -592,
+        -96
+      ],
+      "id": "8a0d120a-3c6e-455c-9080-e959a4c441c6",
+      "name": "When chat message received",
+      "webhookId": "94731f95-df0d-45a1-9a8c-8022b08dc187"
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatGroq",
+      "typeVersion": 1,
+      "position": [
+        -528,
+        112
+      ],
+      "id": "f43d870d-ce51-4230-8187-992fab6c421b",
+      "name": "Groq Chat Model",
+      "credentials": {
+        "groqApi": {
+          "id": "nZM2bLMBkNrYBi0N",
+          "name": "Groq account"
+        }
+      }
+    },
+    {
+      "parameters": {},
+      "type": "@n8n/n8n-nodes-langchain.memoryBufferWindow",
+      "typeVersion": 1.3,
+      "position": [
+        -384,
+        112
+      ],
+      "id": "513bcf6d-7013-433c-9409-3bed652403b1",
+      "name": "Simple Memory"
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "typeVersion": 3.1,
+      "position": [
+        -384,
+        -96
+      ],
+      "id": "537b863c-e9bd-4977-a7a3-58e31c742b1c",
+      "name": "Parent AI Agent"
+    },
+    {
+      "parameters": {
+        "workflowId": {
+          "__rl": true,
+          "value": "m9acMrx34exj9zUq",
+          "mode": "list",
+          "cachedResultUrl": "/workflow/m9acMrx34exj9zUq",
+          "cachedResultName": "My Sub-Workflow 1"
+        },
+        "workflowInputs": {
+          "mappingMode": "defineBelow",
+          "value": {},
+          "matchingColumns": [],
+          "schema": [],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.toolWorkflow",
+      "typeVersion": 2.2,
+      "position": [
+        -240,
+        112
+      ],
+      "id": "c2c770d1-9d82-47a6-8f4a-ad6eb5a7133c",
+      "name": "Call 'My Sub-Workflow 1'"
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "When chat message received": {
+      "main": [
+        [
+          {
+            "node": "Parent AI Agent",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Groq Chat Model": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "Parent AI Agent",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Simple Memory": {
+      "ai_memory": [
+        [
+          {
+            "node": "Parent AI Agent",
+            "type": "ai_memory",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Call 'My Sub-Workflow 1'": {
+      "ai_tool": [
+        [
+          {
+            "node": "Parent AI Agent",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1",
+    "binaryMode": "separate"
+  },
+  "versionId": "5f0942ea-3676-44e9-a424-d8c38e56373e",
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": "781f542c85297baff2393254780b5f228d9e0479737828ca2c79b01cf56630d7"
+  },
+  "id": "aZBoJI9m0zp1Gf0R",
+  "tags": []
+}
