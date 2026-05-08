@@ -1,0 +1,199 @@
+{
+  "name": "sub agent contact",
+  "nodes": [
+    {
+      "parameters": {
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.chatTrigger",
+      "typeVersion": 1.4,
+      "position": [
+        -208,
+        -64
+      ],
+      "id": "d4959811-ad00-4adf-838b-d581e5be671b",
+      "name": "When chat message received",
+      "webhookId": "ad04eedb-0407-488e-8dc0-b39203e7e5c7"
+    },
+    {
+      "parameters": {
+        "promptType": "define",
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "typeVersion": 3.1,
+      "position": [
+        144,
+        -64
+      ],
+      "id": "ea3c1004-e200-4eed-9d9a-dc8a066f46de",
+      "name": "AI Agent"
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatMistralCloud",
+      "typeVersion": 1,
+      "position": [
+        128,
+        112
+      ],
+      "id": "4100bd7a-0c8b-4271-8e1a-d9e70cda2a9f",
+      "name": "Mistral Cloud Chat Model",
+      "credentials": {
+        "mistralCloudApi": {
+          "id": "5E46jvgvbEApUId5",
+          "name": "Mistral Cloud account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "contextWindowLength": 15
+      },
+      "type": "@n8n/n8n-nodes-langchain.memoryBufferWindow",
+      "typeVersion": 1.3,
+      "position": [
+        240,
+        192
+      ],
+      "id": "a5154b2f-8549-4731-bb05-ad07f299e196",
+      "name": "Simple Memory"
+    },
+    {
+      "parameters": {
+        "documentId": {
+          "__rl": true,
+          "mode": "list",
+          "value": ""
+        },
+        "sheetName": {
+          "__rl": true,
+          "mode": "list",
+          "value": ""
+        }
+      },
+      "type": "n8n-nodes-base.googleSheetsTool",
+      "typeVersion": 4.7,
+      "position": [
+        688,
+        96
+      ],
+      "id": "c1bb67ae-1054-498b-8377-d1b687ee4aaf",
+      "name": "Get Contact",
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "rRVqzLgnZlB6M1OC",
+          "name": "Google Sheets account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "descriptionType": "manual",
+        "toolDescription": "# Role\nYou are a contact management assistant. Your responsibilities include looking up contacts, adding new contacts, or updating a contact's information.\n#Tools\n1. **Get contact** - Use this tool to retrieve contact informations\n2. **Add or Update Contact** Use this tool to store new contact information or modify existing entries.",
+        "operation": "appendOrUpdate",
+        "documentId": {
+          "__rl": true,
+          "mode": "list",
+          "value": ""
+        },
+        "sheetName": {
+          "__rl": true,
+          "mode": "list",
+          "value": ""
+        }
+      },
+      "type": "n8n-nodes-base.googleSheetsTool",
+      "typeVersion": 4.7,
+      "position": [
+        544,
+        192
+      ],
+      "id": "fbf85db6-5419-4ed2-86b7-9fe03fbe299f",
+      "name": "Add or Update Contact",
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "rRVqzLgnZlB6M1OC",
+          "name": "Google Sheets account"
+        }
+      }
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "When chat message received": {
+      "main": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Mistral Cloud Chat Model": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "AI Agent": {
+      "main": [
+        []
+      ]
+    },
+    "Simple Memory": {
+      "ai_memory": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_memory",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Get Contact": {
+      "ai_tool": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Add or Update Contact": {
+      "ai_tool": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1",
+    "binaryMode": "separate"
+  },
+  "versionId": "95b3f99b-14a9-4c2b-90f2-3ff1f71cd695",
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": "781f542c85297baff2393254780b5f228d9e0479737828ca2c79b01cf56630d7"
+  },
+  "id": "nMpN1QLckdhp3kjn",
+  "tags": []
+}
